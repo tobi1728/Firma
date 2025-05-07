@@ -1,0 +1,179 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Raporty</h1>
+        <div class="btn-group">
+            <button class="btn btn-primary" id="generateReport">
+                <i class="fas fa-file-export"></i> Generuj raport
+            </button>
+            <button class="btn btn-outline-primary" id="downloadReport">
+                <i class="fas fa-download"></i> Pobierz PDF
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Filtry raportu</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Zakres dat</label>
+                                <select class="form-select">
+                                    <option>Ostatni tydzień</option>
+                                    <option>Ostatni miesiąc</option>
+                                    <option>Ostatni kwartał</option>
+                                    <option>Własny zakres</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Typ raportu</label>
+                                <select class="form-select">
+                                    <option>Jazdy</option>
+                                    <option>Konie</option>
+                                    <option>Instruktorzy</option>
+                                    <option>Finanse</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Format</label>
+                                <select class="form-select">
+                                    <option>PDF</option>
+                                    <option>Excel</option>
+                                    <option>CSV</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label class="form-label">Grupowanie</label>
+                                <select class="form-select">
+                                    <option>Dzienne</option>
+                                    <option>Tygodniowe</option>
+                                    <option>Miesięczne</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Statystyki jazd</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="ridesChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Obciążenie koni</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="horsesChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Szczegółowe statystyki</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Liczba jazd</th>
+                                    <th>Aktywne konie</th>
+                                    <th>Średni czas jazdy</th>
+                                    <th>Przychód</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2024-01-19</td>
+                                    <td>15</td>
+                                    <td>8</td>
+                                    <td>45 min</td>
+                                    <td>1500 zł</td>
+                                </tr>
+                                <tr>
+                                    <td>2024-01-18</td>
+                                    <td>12</td>
+                                    <td>6</td>
+                                    <td>50 min</td>
+                                    <td>1200 zł</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ridesCtx = document.getElementById('ridesChart').getContext('2d');
+        new Chart(ridesCtx, {
+            type: 'line',
+            data: {
+                labels: ['Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob', 'Nd'],
+                datasets: [{
+                    label: 'Liczba jazd',
+                    data: [12, 15, 10, 14, 16, 18, 15],
+                    borderColor: '#0066cc',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        const horsesCtx = document.getElementById('horsesChart').getContext('2d');
+        new Chart(horsesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Książę', 'Luna', 'Wicher', 'Gwiazda', 'Burza'],
+                datasets: [{
+                    label: 'Godziny pracy',
+                    data: [25, 20, 18, 15, 22],
+                    backgroundColor: '#0099ff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    </script>
+}

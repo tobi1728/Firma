@@ -1,0 +1,171 @@
+﻿@model IEnumerable<Firma.Intranet.Models.Horse>
+
+@{
+    ViewData["Title"] = "Zarządzanie końmi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Zarządzanie końmi</h1>
+        <a asp-controller="Horses" asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Dodaj konia
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h5 class="card-title mb-0">Lista koni</h5>
+                        </div>
+                        <div class="col-auto">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Szukaj...">
+                                <button class="btn btn-outline-secondary" type="button">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Imię</th>
+                                    <th>Rasa</th>
+                                    <th>Wiek</th>
+                                    <th>Status</th>
+                                    <th>Ostatni przegląd</th>
+                                    <th>Akcje</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td>@item.Breed</td>
+                                        <td>@item.Age</td>
+                                        <td>
+                                            @if (item.Status == "Aktywny")
+                                            {
+                                                <span class="badge bg-success">@item.Status</span>
+                                            }
+                                            else if (item.Status == "W odpoczynku")
+                                            {
+                                                <span class="badge bg-warning text-dark">@item.Status</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">@item.Status</span>
+                                            }
+                                        </td>
+                                        <td>@item.LastCheckup?.ToString("yyyy-MM-dd")</td>
+                                        <td>
+                                            <a asp-controller="Horses" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info me-1" title="Edytuj">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a asp-controller="Horses" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-warning me-1" title="Szczegóły">
+                                                <i class="fas fa-history"></i>
+                                            </a>
+                                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteModal" data-id="@item.Id" data-name="@item.Name">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Status koni</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="flex-grow-1"><h6 class="mb-0">Aktywne</h6></div>
+                        <div class="ms-2"><span class="h4 mb-0">28</span></div>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="flex-grow-1"><h6 class="mb-0">W odpoczynku</h6></div>
+                        <div class="ms-2"><span class="h4 mb-0">2</span></div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1"><h6 class="mb-0">Niedostępne</h6></div>
+                        <div class="ms-2"><span class="h4 mb-0">1</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Nadchodzące przeglądy</h5>
+                </div>
+                <div class="card-body">
+                    <div class="upcoming-check">
+                        <div class="upcoming-check-item">
+                            <div class="check-date">25 Sty</div>
+                            <div class="check-info">
+                                <h6>Luna</h6>
+                                <p>Przegląd weterynaryjny</p>
+                            </div>
+                        </div>
+                        <div class="upcoming-check-item">
+                            <div class="check-date">28 Sty</div>
+                            <div class="check-info">
+                                <h6>Wicher</h6>
+                                <p>Kontrola kopyt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="deleteForm" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Potwierdź usunięcie</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Czy na pewno chcesz usunąć konia <strong id="horseName"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                    <button type="submit" class="btn btn-danger">Tak, usuń</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        const deleteModal = document.getElementById('deleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const horseId = button.getAttribute('data-id');
+            const horseName = button.getAttribute('data-name');
+
+            const form = deleteModal.querySelector('#deleteForm');
+            form.setAttribute('action', `/Horses/DeleteConfirmed/${horseId}`);
+
+            const namePlaceholder = deleteModal.querySelector('#horseName');
+            namePlaceholder.textContent = horseName;
+        });
+    </script>
+}

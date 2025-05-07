@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Stajnia Blue Knight</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+            <img class="logo" src="~/content/logo.svg" />    
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="About">O Nas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Horses">Konie</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Instructors">Instruktorzy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="BookRide">Zarezerwuj jazdę</a>
+                    </li>
+                </ul>
+                <div class="auth-elements">
+                    <a class="nav-link" asp-controller="Account" asp-action="Login">Logowanie</a>
+                    <a class="btn btn-primary ms-2" asp-controller="Account" asp-action="Register">Dosiądź konia</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <footer class="footer mt-auto">
+        <div class="footer-main">
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-lg-4 mb-4">
+                        <div class="footer-brand mb-6">
+                            <img class="logo" src="~/content/logo.svg" />
+                            <p>Profesjonalna stajnia z wieloletnim doświadczeniem w nauczaniu jeździectwa.</p>
+                        </div>
+                        <div class="footer-social">
+                            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <h5 class="footer-title">Kontakt</h5>
+                        <ul class="footer-contact">
+                            <li>
+                                <i class="fas fa-map-marker-alt"></i>
+                                ul. Końska 123, 00-000 Warszawa
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                +48 123 456 789
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                                kontakt@blueknight.pl
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 mb-4">
+                        <h5 class="footer-title">Godziny otwarcia</h5>
+                        <ul class="footer-hours">
+                            <li>
+                                <span>Poniedziałek - Piątek:</span>
+                                <span>8:00 - 20:00</span>
+                            </li>
+                            <li>
+                                <span>Sobota - Niedziela:</span>
+                                <span>9:00 - 18:00</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                    <div class="text-center">
+                        &copy; @DateTime.Now.Year Stajnia Blue Knight. Wszelkie prawa zastrzeżone.
+                    </div>
+            </div>
+        </div>
+    </footer>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="~/js/site.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

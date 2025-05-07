@@ -1,0 +1,412 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #111827;
+    color: #ffffff;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+    padding-top: 76px;
+}
+
+.navbar {
+    background-color: #0a0f1c !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #ffffff1a;
+    padding: 16px 0;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 24px;
+    color: #0099ff !important;
+}
+
+.nav-link {
+    color: #cbd5e1 !important;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+    .nav-link:hover {
+        color: #0099ff !important;
+    }
+
+.btn-primary {
+    background-color: #0066cc;
+    border: none;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 12px 24px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+    .btn-primary:hover {
+        background-color: #0099ff;
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px #0066cc33;
+    }
+
+.hero-section {
+    background: linear-gradient(#0a0f1ccc, #0a0f1ccc), url('../content/images/horse-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin-top: -76px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px;
+}
+
+.hero-title {
+    font-size: 64px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.hero-subtitle {
+    font-size: 24px;
+    color: #cbd5e1;
+    margin-bottom: 32px;
+}
+
+.card {
+    background-color: #1a2234;
+    border: 1px solid #ffffff1a;
+    border-radius: 12px;
+    transition: all 0.3s;
+    color: #cbd5e1;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+        border-color: #0099ff;
+    }
+
+.stats-card {
+    background-color: #1a2234;
+    border: 1px solid #ffffff1a;
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.stats-number {
+    font-size: 48px;
+    font-weight: 700;
+    color: #0099ff;
+    margin-bottom: 16px;
+}
+
+.stats-label {
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.horse-card {
+    background-color: #1a2234;
+    border: 1px solid #ffffff1a;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    transition: all 0.4s;
+}
+
+    .horse-card:hover {
+        transform: translateY(-10px);
+        border-color: #0099ff;
+    }
+
+.horse-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.horse-info {
+    padding: 24px;
+}
+
+.horse-name {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.horse-description {
+    color: #cbd5e1;
+    margin-bottom: 16px;
+}
+
+.horse-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #cbd5e1;
+}
+
+    .horse-details li {
+        margin-bottom: 8px;
+    }
+
+.instructor-card {
+    background-color: #1a2234;
+    border: 1px solid #ffffff1a;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    transition: all 0.4s;
+    text-align: center;
+    padding: 32px;
+}
+
+    .instructor-card:hover {
+        transform: translateY(-10px);
+        border-color: #0099ff;
+    }
+
+.instructor-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    margin: 0 auto 24px;
+    border: 3px solid #0099ff;
+    padding: 3px;
+    overflow: hidden;
+}
+
+    .instructor-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+.instructor-name {
+    font-size: 24px;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.instructor-title {
+    color: #0099ff;
+    margin-bottom: 16px;
+    font-weight: 500;
+}
+
+.instructor-description {
+    color: #cbd5e1;
+    margin-bottom: 24px;
+}
+
+.instructor-specialties {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #cbd5e1;
+}
+
+    .instructor-specialties li {
+        margin-bottom: 8px;
+    }
+
+.form-control {
+    background-color: #0a0f1c;
+    border: 1px solid #ffffff1a;
+    color: #ffffff;
+    padding: 12px 16px;
+}
+
+    .form-control:focus {
+        background-color: #0a0f1c;
+        border-color: #0099ff;
+        color: #ffffff;
+        box-shadow: 0 0 0 4px #0066cc40;
+    }
+
+.logo {
+    width: 100px;
+    height: 100%;
+    object-fit: cover; 
+    margin-right: 100px;
+}
+
+.auth-elements {
+    display: flex;
+    align-items: center;
+}
+
+.auth-elements .nav-link {
+    margin-right: 30px;
+}
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 32px 0;
+}
+
+.auth-logo {
+    color: #0099ff;
+    font-size: 24px;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 32px;
+    display: block;
+}
+
+.auth-card {
+    background-color: #1a2234;
+    border: 1px solid #ffffff1a;
+    border-radius: 12px;
+}
+
+.auth-card-header {
+    background-color: transparent;
+    border-bottom: 1px solid #ffffff1a;
+    padding: 24px;
+}
+
+.auth-card-body {
+    padding: 32px;
+}
+
+.footer {
+    background-color: #0a0f1c;
+    margin-top: auto;
+}
+
+.footer-main {
+    padding: 64px 0;
+    border-bottom: 1px solid #ffffff1a;
+}
+
+.footer-brand h4 {
+    color: #0099ff;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.footer-social {
+    display: flex;
+    gap: 16px;
+}
+
+.social-link {
+    color: #cbd5e1;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+    .social-link:hover {
+        color: #0099ff;
+    }
+
+.footer-title {
+    color: #ffffff;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.footer-contact {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    color: #cbd5e1;
+}
+
+.footer-hours {
+    color: #cbd5e1;
+    list-style: none;
+    padding: 0;
+    margin-right: 100px;
+}
+
+.footer-contact li, .footer-hours li {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+    .footer-contact i {
+        color: #0099ff;
+        width: 20px;
+    }
+
+    .footer-hours li {
+        justify-content: space-between;
+    }
+
+.footer-bottom {
+    background-color: #00000033;
+    padding: 24px 0;
+    color: #cbd5e1;
+    margin: 0 auto;
+}
+
+.footer-link {
+    color: #cbd5e1;
+    text-decoration: none;
+    margin-left: 24px;
+    transition: color 0.3s;
+}
+
+    .footer-link:hover {
+        color: #0099ff;
+    }
+
+.section-padding {
+    padding: 80px 0;
+}
+
+.section-title {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.section-subtitle {
+    color: #cbd5e1;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 48px;
+}
+
+.booking-card {
+    background-color: #1a2234;
+    border: 1px solid #ffffff1a;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    transition: all 0.4s;
+    text-align: center;
+    padding: 32px;
+}
+
+.booking-card .btn {
+    width: 50%;
+}
+
+form-select {
+    background-color: #1a2234;
+}

@@ -1,0 +1,35 @@
+﻿@model Firma.Intranet.Models.Horse
+
+@{
+    ViewData["Title"] = "Szczegóły konia";
+}
+
+<div class="container mt-4 form-box-left">
+    <h2 class="mb-4">Szczegóły konia</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4">Imię</dt>
+                <dd class="col-sm-8">@Model.Name</dd>
+
+                <dt class="col-sm-4">Rasa</dt>
+                <dd class="col-sm-8">@Model.Breed</dd>
+
+                <dt class="col-sm-4">Wiek</dt>
+                <dd class="col-sm-8">@Model.Age</dd>
+
+                <dt class="col-sm-4">Status</dt>
+                <dd class="col-sm-8">@Model.Status</dd>
+
+                <dt class="col-sm-4">Data ostatniego przeglądu</dt>
+                <dd class="col-sm-8">@Model.LastCheckup?.ToString("yyyy-MM-dd")</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">Edytuj</a>
+        <a asp-controller="Home" asp-action="Horses" class="btn btn-secondary">Powrót</a>
+    </div>
+</div>
