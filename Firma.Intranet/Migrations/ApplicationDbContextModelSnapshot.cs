@@ -39,8 +39,16 @@ namespace Firma.Intranet.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("HeightCm")
+                        .HasColumnType("int")
+                        .HasColumnName("HeightCm");
+
                     b.Property<DateTime?>("LastCheckup")
                         .HasColumnType("date");
+
+                    b.Property<string>("MaxRiderLevel")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("MaxRiderLevel");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -48,14 +56,60 @@ namespace Firma.Intranet.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(50)");
 
+                    b.Property<string>("PhotoUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<int?>("WeightKg")
+                        .HasColumnType("int")
+                        .HasColumnName("WeightKg");
+
                     b.HasKey("Id");
 
                     b.ToTable("horses", (string)null);
+                });
+
+            modelBuilder.Entity("Firma.Intranet.Models.HorseCheckup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CheckupDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("HorseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HorseId");
+
+                    b.ToTable("HorseCheckups");
+                });
+
+            modelBuilder.Entity("Firma.Intranet.Models.HorseCheckup", b =>
+                {
+                    b.HasOne("Firma.Intranet.Models.Horse", "Horse")
+                        .WithMany()
+                        .HasForeignKey("HorseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Horse");
                 });
 #pragma warning restore 612, 618
         }

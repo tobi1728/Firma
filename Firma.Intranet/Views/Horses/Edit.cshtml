@@ -2,51 +2,98 @@
 
 @{
     ViewData["Title"] = "Edytuj konia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container mt-4 form-box-left">
-    <h2 class="mb-4">Edytuj konia</h2>
+<div class="container mt-4 form-box-left" style="max-width: 1000px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">Edytuj konia</h3>
 
-    <form asp-action="Edit">
-        <input type="hidden" asp-for="Id" />
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
 
-        <div class="mb-3">
-            <label asp-for="Name" class="form-label"></label>
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+                <input type="hidden" asp-for="Id" />
+
+                <div class="row align-items-start">
+                    <div class="col-lg-7 pe-lg-5">
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Breed" class="form-label"></label>
+                            <input asp-for="Breed" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Age" class="form-label"></label>
+                            <input asp-for="Age" type="number" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Status" class="form-label"></label>
+                            <select asp-for="Status" class="form-select">
+                                <option>Aktywny</option>
+                                <option>W odpoczynku</option>
+                                <option>Niedostępny</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="LastCheckup" class="form-label"></label>
+                            <input asp-for="LastCheckup" type="date" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="WeightKg" class="form-label"></label>
+                            <input asp-for="WeightKg" type="number" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="HeightCm" class="form-label"></label>
+                            <input asp-for="HeightCm" type="number" class="form-control" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="MaxRiderLevel" class="form-label"></label>
+                            <select asp-for="MaxRiderLevel" class="form-select">
+                                <option>Początkujący</option>
+                                <option>Średniozaawansowany</option>
+                                <option>Zaawansowany</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Zmień zdjęcie (opcjonalnie)</label>
+                            <input type="file" name="photo" class="form-control" />
+
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-primary">Zapisz</button>
+                            <a asp-controller="Home" asp-action="Horses" class="btn btn-secondary ms-2">Anuluj</a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 d-flex justify-content-center">
+                        @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+                        {
+                            <div class="border rounded shadow-sm p-2 w-100" style="min-height: 100%; max-height: 400px;">
+                                <img src="@Model.PhotoUrl"
+                                     alt="Zdjęcie konia"
+                                     class="img-fluid rounded w-100 h-100"
+                                     style="object-fit: cover;" />
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-muted fst-italic">Brak zdjęcia konia</div>
+                        }
+                    </div>
+                </div>
+            </form>
         </div>
-
-        <div class="mb-3">
-            <label asp-for="Breed" class="form-label"></label>
-            <input asp-for="Breed" class="form-control" />
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Age" class="form-label"></label>
-            <input asp-for="Age" class="form-control" type="number" />
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="Status" class="form-label"></label>
-            <select asp-for="Status" class="form-select">
-                <option>Aktywny</option>
-                <option>W odpoczynku</option>
-                <option>Niedostępny</option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label asp-for="LastCheckup" class="form-label"></label>
-            <input asp-for="LastCheckup" class="form-control" type="date" />
-        </div>
-
-        <button type="submit" class="btn btn-primary">Zapisz</button>
-        <a asp-controller="Home" asp-action="Horses" class="btn btn-secondary ms-2">Anuluj</a>
-    </form>
+    </div>
 </div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}

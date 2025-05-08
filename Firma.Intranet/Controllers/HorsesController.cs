@@ -45,17 +45,33 @@ namespace Firma.Intranet.Controllers
         // POST: Horses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Horse horse)
+        public async Task<IActionResult> Create(Horse horse, IFormFile? photo) // <- tu dodajemy ?
         {
             if (ModelState.IsValid)
             {
+                if (photo != null && photo.Length > 0)
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
+                    var relativePath = "/content/images/horses/" + fileName;
+                    var absolutePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "images", "horses", fileName);
+
+                    Directory.CreateDirectory(Path.GetDirectoryName(absolutePath)!);
+
+                    using (var stream = new FileStream(absolutePath, FileMode.Create))
+                    {
+                        await photo.CopyToAsync(stream);
+                    }
+
+                    horse.PhotoUrl = relativePath;
+                }
+
                 _context.Add(horse);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Horses", "Home");
             }
+
             return View(horse);
         }
-
         // GET: Horses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -72,7 +88,7 @@ namespace Firma.Intranet.Controllers
         // POST: Horses/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Breed,Age,Status,LastCheckup")] Horse horse)
+        public async Task<IActionResult> Edit(int id, Horse horse, IFormFile? photo)
         {
             if (id != horse.Id)
                 return NotFound();
@@ -81,8 +97,37 @@ namespace Firma.Intranet.Controllers
             {
                 try
                 {
-                    _context.Update(horse);
+                    var existingHorse = await _context.Horses.FindAsync(id);
+                    if (existingHorse == null)
+                        return NotFound();
+
+                    existingHorse.Name = horse.Name;
+                    existingHorse.Breed = horse.Breed;
+                    existingHorse.Age = horse.Age;
+                    existingHorse.Status = horse.Status;
+                    existingHorse.LastCheckup = horse.LastCheckup;
+                    existingHorse.WeightKg = horse.WeightKg;
+                    existingHorse.HeightCm = horse.HeightCm;
+                    existingHorse.MaxRiderLevel = horse.MaxRiderLevel;
+
+                    if (photo != null && photo.Length > 0)
+                    {
+                        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
+                        var relativePath = "/content/images/horses/" + fileName;
+                        var absolutePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "content", "images", "horses", fileName);
+
+                        Directory.CreateDirectory(Path.GetDirectoryName(absolutePath)!);
+
+                        using (var stream = new FileStream(absolutePath, FileMode.Create))
+                        {
+                            await photo.CopyToAsync(stream);
+                        }
+
+                        existingHorse.PhotoUrl = relativePath;
+                    }
+
                     await _context.SaveChangesAsync();
+                    return RedirectToAction("Horses", "Home");
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -91,8 +136,8 @@ namespace Firma.Intranet.Controllers
                     else
                         throw;
                 }
-                return RedirectToAction("Horses", "Home");
             }
+
             return View(horse);
         }
 
