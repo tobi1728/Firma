@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -22,25 +21,20 @@ namespace Firma.Intranet.Controllers
         // GET: HorseCheckups
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.HorseCheckups.Include(h => h.Horse);
-            return View(await applicationDbContext.ToListAsync());
+            var checkups = _context.HorseCheckups.Include(h => h.Horse);
+            return View(await checkups.ToListAsync());
         }
 
         // GET: HorseCheckups/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var horseCheckup = await _context.HorseCheckups
                 .Include(h => h.Horse)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (horseCheckup == null)
-            {
-                return NotFound();
-            }
+
+            if (horseCheckup == null) return NotFound();
 
             return View(horseCheckup);
         }
@@ -53,100 +47,74 @@ namespace Firma.Intranet.Controllers
         }
 
         // POST: HorseCheckups/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(HorseCheckup horseCheckup)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.HorseId = new SelectList(_context.Horses, "Id", "Name", horseCheckup.HorseId);
+                ViewData["HorseId"] = new SelectList(_context.Horses, "Id", "Name", horseCheckup.HorseId);
                 return View(horseCheckup);
             }
 
-            // Dodaj przegląd
-            _context.HorseCheckups.Add(horseCheckup);
-
-            // Zaktualizuj LastCheckup
-            var horse = await _context.Horses.FindAsync(horseCheckup.HorseId);
-            if (horse != null)
-            {
-                horse.LastCheckup = horseCheckup.CheckupDate;
-            }
-
+            _context.Add(horseCheckup);
             await _context.SaveChangesAsync();
+
+            await UpdateLastCheckupAsync(horseCheckup.HorseId);
             return RedirectToAction(nameof(Index));
         }
 
         // GET: HorseCheckups/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var horseCheckup = await _context.HorseCheckups.FindAsync(id);
-            if (horseCheckup == null)
-            {
-                return NotFound();
-            }
+            if (horseCheckup == null) return NotFound();
+
             ViewData["HorseId"] = new SelectList(_context.Horses, "Id", "Name", horseCheckup.HorseId);
             return View(horseCheckup);
         }
 
         // POST: HorseCheckups/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,HorseId,CheckupDate,Type,Notes")] HorseCheckup horseCheckup)
+        public async Task<IActionResult> Edit(int id, HorseCheckup horseCheckup)
         {
-            if (id != horseCheckup.Id)
+            if (id != horseCheckup.Id) return NotFound();
+
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                ViewData["HorseId"] = new SelectList(_context.Horses, "Id", "Name", horseCheckup.HorseId);
+                return View(horseCheckup);
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(horseCheckup);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!HorseCheckupExists(horseCheckup.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.Update(horseCheckup);
+                await _context.SaveChangesAsync();
+
+                await UpdateLastCheckupAsync(horseCheckup.HorseId);
             }
-            ViewData["HorseId"] = new SelectList(_context.Horses, "Id", "Name", horseCheckup.HorseId);
-            return View(horseCheckup);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!HorseCheckupExists(horseCheckup.Id)) return NotFound();
+                throw;
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: HorseCheckups/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var horseCheckup = await _context.HorseCheckups
                 .Include(h => h.Horse)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (horseCheckup == null)
-            {
-                return NotFound();
-            }
+
+            if (horseCheckup == null) return NotFound();
 
             return View(horseCheckup);
         }
@@ -159,11 +127,30 @@ namespace Firma.Intranet.Controllers
             var horseCheckup = await _context.HorseCheckups.FindAsync(id);
             if (horseCheckup != null)
             {
+                int horseId = horseCheckup.HorseId;
+
                 _context.HorseCheckups.Remove(horseCheckup);
+                await _context.SaveChangesAsync();
+
+                await UpdateLastCheckupAsync(horseId);
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        private async Task UpdateLastCheckupAsync(int horseId)
+        {
+            var latest = await _context.HorseCheckups
+                .Where(c => c.HorseId == horseId)
+                .OrderByDescending(c => c.CheckupDate)
+                .FirstOrDefaultAsync();
+
+            var horse = await _context.Horses.FindAsync(horseId);
+            if (horse != null)
+            {
+                horse.LastCheckup = latest?.CheckupDate;
+                await _context.SaveChangesAsync();
+            }
         }
 
         private bool HorseCheckupExists(int id)

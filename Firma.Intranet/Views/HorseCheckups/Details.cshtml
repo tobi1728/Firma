@@ -1,43 +1,31 @@
-﻿@model Firma.Intranet.Models.HorseCheckup
+﻿@model HorseCheckup
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Szczegóły przeglądu";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Details</h1>
+<div class="container mt-4 form-box-left" style="max-width: 1000px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">Szczegóły przeglądu</h3>
+            <dl class="row">
+                <dt class="col-sm-3">Koń</dt>
+                <dd class="col-sm-9">@Model.Horse.Name</dd>
 
-<div>
-    <h4>HorseCheckup</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CheckupDate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CheckupDate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Notes)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Notes)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Horse)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Horse.Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+                <dt class="col-sm-3">Data przeglądu</dt>
+                <dd class="col-sm-9">@Model.CheckupDate.ToString("yyyy-MM-dd")</dd>
+
+                <dt class="col-sm-3">Typ</dt>
+                <dd class="col-sm-9">@Model.Type</dd>
+
+                <dt class="col-sm-3">Notatki</dt>
+                <dd class="col-sm-9">@Model.Notes</dd>
+            </dl>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">
+                <i class="fas fa-edit"></i> Edytuj
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+        </div>
+    </div>
 </div>
