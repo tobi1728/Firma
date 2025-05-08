@@ -1,0 +1,59 @@
+﻿@model Firma.Intranet.Models.Rider
+
+@{
+    ViewData["Title"] = "Szczegóły jeźdźca";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4 form-box-left" style="max-width: 1000px;">
+<div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">Szczegóły jeźdźca</h3>
+
+            <div class="row align-items-start">
+                <div class="col-lg-7 pe-lg-5">
+                    <dl class="row">
+                        <dt class="col-sm-4">Imię</dt>
+                        <dd class="col-sm-8">@Model.FirstName</dd>
+
+                        <dt class="col-sm-4">Nazwisko</dt>
+                        <dd class="col-sm-8">@Model.LastName</dd>
+
+                        <dt class="col-sm-4">Numer telefonu</dt>
+                        <dd class="col-sm-8">@Model.PhoneNumber</dd>
+
+                        <dt class="col-sm-4">Wiek</dt>
+                        <dd class="col-sm-8">@Model.Age</dd>
+
+                        <dt class="col-sm-4">Poziom</dt>
+                        <dd class="col-sm-8">@Model.SkillLevel</dd>
+
+                        <dt class="col-sm-4">Waga</dt>
+                        <dd class="col-sm-8">@Model.Weight kg</dd>
+                    </dl>
+                </div>
+
+                <div class="col-lg-5 d-flex justify-content-center">
+                    @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+                    {
+                        <div class="border rounded shadow-sm p-2" style="min-height: 100%; max-height: 400px;">
+                            <img src="@Url.Content(Model.PhotoUrl)"
+                                 alt="Zdjęcie jeźdźca"
+                                 class="img-fluid rounded w-100 h-100"
+                                 style="object-fit: cover;" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-muted fst-italic">Brak zdjęcia</div>
+                    }
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">Edytuj</a>
+                <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+            </div>
+        </div>
+    </div>
+</div>

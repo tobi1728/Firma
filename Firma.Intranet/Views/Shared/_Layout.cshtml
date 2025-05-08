@@ -17,7 +17,7 @@
             </a>
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item">
-                    <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")"
+                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")"
                        asp-controller="Home" asp-action="Index">
                         <i class="fas fa-home me-2"></i> Panel główny
                     </a>
@@ -32,6 +32,12 @@
                     <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Horses" ? "active" : "")"
                        asp-controller="Home" asp-action="Horses">
                         <i class="fas fa-horse me-2"></i> Zarządzanie końmi
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Riders" ? "active" : "")"
+                       asp-controller="Riders" asp-action="Index">
+                        <i class="fas fa-user-friends me-2"></i> Jeźdźcy
                     </a>
                 </li>
                 <li class="nav-item">

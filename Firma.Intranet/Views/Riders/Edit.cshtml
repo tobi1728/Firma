@@ -1,0 +1,65 @@
+﻿@model Firma.Intranet.Models.Rider
+
+@{
+    ViewData["Title"] = "Edytuj jeźdźca";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid form-box-left">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">Edytuj dane jeźdźca</h3>
+
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Id" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="FirstName" class="form-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="LastName" class="form-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PhoneNumber" class="form-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Age" class="form-label"></label>
+                    <input asp-for="Age" class="form-control" type="number" />
+                </div>
+
+
+                <div class="mb-3">
+                    <label asp-for="SkillLevel" class="control-label"></label>
+                    <select asp-for="SkillLevel" class="form-control">
+                        <option value="">-- Wybierz poziom --</option>
+                        <option>Podstawowy</option>
+                        <option>Średniozaawansowany</option>
+                        <option>Zaawansowany</option>
+                        <option>Sportowy</option>
+                    </select>
+                    <span asp-validation-for="SkillLevel" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Weight" class="form-label"></label>
+                    <input asp-for="Weight" class="form-control" type="number" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Zdjęcie (opcjonalne)</label>
+                    <input type="file" name="Photo" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                <a asp-action="Index" class="btn btn-secondary ms-2">Anuluj</a>
+            </form>
+        </div>
+    </div>
+</div>
