@@ -11,22 +11,22 @@
             <h3 class="mb-4">Dodaj przegląd</h3>
             <form asp-action="Create" method="post">
                 <div class="mb-3">
-                    <label asp-for="HorseId" class="form-label"></label>
+                    <label asp-for="HorseId" class="form-label">Koń</label>
                     <select asp-for="HorseId" class="form-select" asp-items="ViewBag.HorseId"></select>
                     <span asp-validation-for="HorseId" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="CheckupDate" class="form-label"></label>
+                    <label asp-for="CheckupDate" class="form-label">Data przeglądu</label>
                     <input asp-for="CheckupDate" type="date" class="form-control" />
                     <span asp-validation-for="CheckupDate" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="Type" class="form-label"></label>
+                    <label asp-for="Type" class="form-label">Typ</label>
                     <input asp-for="Type" class="form-control" />
                     <span asp-validation-for="Type" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
-                    <label asp-for="Notes" class="form-label"></label>
+                    <label asp-for="Notes" class="form-label">Notatki</label>
                     <input asp-for="Notes" class="form-control" />
                 </div>
                 <button type="submit" class="btn btn-primary">Zapisz</button>

@@ -19,6 +19,7 @@ namespace Firma.Intranet.Data
         public DbSet<HorseCheckup> HorseCheckups { get; set; }
         public DbSet<Rider> Riders { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

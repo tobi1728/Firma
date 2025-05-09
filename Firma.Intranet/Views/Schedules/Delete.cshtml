@@ -1,0 +1,36 @@
+﻿@model Firma.Intranet.Models.Schedule
+
+@{
+    ViewData["Title"] = "Usuń grafik";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4 form-box-left" style="max-width: 800px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4 text-danger">Czy na pewno chcesz usunąć grafik?</h3>
+
+            <dl class="row">
+                <dt class="col-sm-4">Instruktor</dt>
+                <dd class="col-sm-8">@Model.Instructor?.FirstName @Model.Instructor?.LastName</dd>
+
+                <dt class="col-sm-4">Data rozpoczęcia</dt>
+                <dd class="col-sm-8">@Model.StartDate.ToString("yyyy-MM-dd HH:mm")</dd>
+
+                <dt class="col-sm-4">Data zakończenia</dt>
+                <dd class="col-sm-8">@Model.EndDate.ToString("yyyy-MM-dd HH:mm")</dd>
+
+                <dt class="col-sm-4">Opis</dt>
+                <dd class="col-sm-8">@Model.Description</dd>
+            </dl>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-danger me-2">Tak, usuń</button>
+                    <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
