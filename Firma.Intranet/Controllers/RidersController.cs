@@ -29,9 +29,7 @@ namespace Firma.Intranet.Controllers
             if (id == null) return NotFound();
 
             var rider = await _context.Riders.FirstOrDefaultAsync(r => r.Id == id);
-            if (rider == null) return NotFound();
-
-            return View(rider);
+            return rider == null ? NotFound() : View(rider);
         }
 
         public IActionResult Create()
@@ -123,7 +121,6 @@ namespace Firma.Intranet.Controllers
                 _context.Riders.Remove(rider);
                 await _context.SaveChangesAsync();
             }
-
             return RedirectToAction(nameof(Index));
         }
     }

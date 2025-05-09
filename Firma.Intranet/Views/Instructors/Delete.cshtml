@@ -1,0 +1,33 @@
+﻿@model Firma.Intranet.Models.Instructor
+@{
+    ViewData["Title"] = "Usuń instruktora";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4 form-box-left" style="max-width: 800px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4 text-danger">Czy na pewno chcesz usunąć instruktora?</h3>
+
+            <dl class="row">
+                <dt class="col-sm-4">Imię</dt>
+                <dd class="col-sm-8">@Model.FirstName</dd>
+
+                <dt class="col-sm-4">Nazwisko</dt>
+                <dd class="col-sm-8">@Model.LastName</dd>
+
+                <dt class="col-sm-4">Lata doświadczenia</dt>
+                <dd class="col-sm-8">@Model.YearsOfExperience</dd>
+
+                <dt class="col-sm-4">Typ jazdy</dt>
+                <dd class="col-sm-8">@Model.RidingType</dd>
+            </dl>
+
+            <form asp-action="DeleteConfirmed">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger me-2">Tak, usuń</button>
+                <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+            </form>
+        </div>
+    </div>
+</div>

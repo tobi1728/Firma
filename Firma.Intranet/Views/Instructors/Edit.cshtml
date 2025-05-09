@@ -1,0 +1,71 @@
+﻿@model Firma.Intranet.Models.Instructor
+
+@{
+    ViewData["Title"] = "Edytuj instruktora";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4 form-box-left" style="max-width: 1000px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">Edytuj instruktora</h3>
+
+            <form asp-action="Edit" enctype="multipart/form-data" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="FirstName" class="form-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="LastName" class="form-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="YearsOfExperience" class="form-label"></label>
+                    <input asp-for="YearsOfExperience" class="form-control" />
+                    <span asp-validation-for="YearsOfExperience" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="RidingType" class="form-label">Typ jazdy</label>
+                    <select asp-for="RidingType" class="form-control" asp-items="ViewBag.RidingTypes">
+                    </select>
+                    <span asp-validation-for="RidingType" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Salary" class="form-label"></label>
+                    <input asp-for="Salary" class="form-control" />
+                    <span asp-validation-for="Salary" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Photo" class="form-label">Zmień zdjęcie</label>
+                    <input type="file" name="Photo" class="form-control" />
+                    @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+                    {
+                        <div class="mt-2">
+                            <img src="@Url.Content(Model.PhotoUrl)" alt="Zdjęcie" class="rounded shadow-sm" style="max-width: 200px; max-height: 200px;" />
+                        </div>
+                    }
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary me-2">Zapisz zmiany</button>
+                    <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

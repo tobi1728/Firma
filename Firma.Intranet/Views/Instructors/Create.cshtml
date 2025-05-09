@@ -1,0 +1,62 @@
+﻿@model Firma.Intranet.Models.Instructor
+
+@{
+    ViewData["Title"] = "Dodaj instruktora";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid form-box-left">
+    <h1 class="h3 mb-4">Dodaj instruktora</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="Create" enctype="multipart/form-data" method="post">
+                <div class="mb-3">
+                    <label asp-for="FirstName" class="form-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="LastName" class="form-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="YearsOfExperience" class="form-label"></label>
+                    <input asp-for="YearsOfExperience" class="form-control" />
+                    <span asp-validation-for="YearsOfExperience" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Salary" class="form-label"></label>
+                    <input asp-for="Salary" class="form-control" />
+                    <span asp-validation-for="Salary" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="RidingType" class="form-label"></label>
+                    <select asp-for="RidingType" class="form-select" asp-items="ViewBag.RidingTypes">
+                        <option value="">-- Wybierz typ jazdy --</option>
+                    </select>
+                    <span asp-validation-for="RidingType" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Zdjęcie</label>
+                    <input type="file" name="Photo" class="form-control" />
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success me-2">Dodaj</button>
+                    <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -8,7 +8,7 @@
 <div class="container-fluid form-box-left">
     <div class="card shadow-sm">
         <div class="card-body">
-            <h3 class="mb-4">Usuń jeźdźca</h3>
+            <h3 class="mb-4 text-danger">Czy na pewno chcesz usunąć jeźdźca?</h3>
 
             <dl class="row">
                 <dt class="col-sm-3">Imię</dt>
@@ -24,7 +24,7 @@
                 <dd class="col-sm-9">@Model.SkillLevel</dd>
             </dl>
 
-            <form asp-action="DeleteConfirmed" method="post">
+            <form asp-action="Delete" method="post">
                 <input type="hidden" asp-for="Id" />
                 <button type="submit" class="btn btn-danger">Tak, usuń</button>
                 <a asp-action="Index" class="btn btn-secondary ms-2">Anuluj</a>

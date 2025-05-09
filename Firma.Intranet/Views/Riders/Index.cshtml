@@ -55,10 +55,12 @@
     </div>
 </div>
 
+<!-- MODAL -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="deleteForm" method="post">
+            <form id="deleteForm" method="post" asp-controller="Riders" asp-action="Delete">
+                <input type="hidden" name="id" id="deleteRiderId" />
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteModalLabel">Potwierdź usunięcie</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -84,7 +86,7 @@
             const riderName = button.getAttribute('data-name');
 
             const form = deleteModal.querySelector('#deleteForm');
-            form.setAttribute('action', `/Riders/DeleteConfirmed/${riderId}`);
+            form.querySelector('#deleteRiderId').value = riderId;
 
             const namePlaceholder = deleteModal.querySelector('#riderName');
             namePlaceholder.textContent = riderName;
