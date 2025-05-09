@@ -1,0 +1,107 @@
+﻿@model IEnumerable<Firma.Intranet.Models.TaskItem>
+
+@{
+    ViewData["Title"] = "Zadania";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0">Zadania</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Dodaj zadanie
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Lista zadań</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Opis</th>
+                        <th>Kategoria</th>
+                        <th>Status</th>
+                        <th>Data dodania</th>
+                        <th>Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var task in Model)
+                    {
+                        <tr>
+                            <td>@task.Name</td>
+                            <td>@task.Category</td>
+                            <td>
+                                @if (task.Status == "Zrobione")
+                                {
+                                    <span class="badge bg-success">Zrobione</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Do zrobienia</span>
+                                }
+                            </td>
+                            <td>@task.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@task.Id" class="btn btn-sm me-1" title="Edytuj">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a asp-action="Details" asp-route-id="@task.Id" class="btn btn-sm me-1" title="Szczegóły">
+                                    <i class="fas fa-magnifying-glass"></i>
+                                </a>
+                                <button class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                                        data-id="@task.Id"
+                                        data-name="@task.Name"
+                                        title="Usuń">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="deleteForm" method="post" asp-controller="Tasks" asp-action="Delete">
+                <input type="hidden" name="id" id="deleteTaskId" />
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Potwierdź usunięcie</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Czy na pewno chcesz usunąć zadanie <strong id="taskName"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                    <button type="submit" class="btn btn-danger">Tak, usuń</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const deleteModal = document.getElementById('deleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const taskId = button.getAttribute('data-id');
+            const taskName = button.getAttribute('data-name');
+
+            const form = deleteModal.querySelector('#deleteForm');
+            form.querySelector('#deleteTaskId').value = taskId;
+
+            const namePlaceholder = deleteModal.querySelector('#taskName');
+            namePlaceholder.textContent = taskName;
+        });
+    </script>
+}

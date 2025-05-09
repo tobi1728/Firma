@@ -1,0 +1,42 @@
+﻿@model Firma.Intranet.Models.TaskItem
+
+@{
+    ViewData["Title"] = "Szczegóły zadania";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4 form-box-left" style="max-width: 800px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">Szczegóły zadania</h3>
+
+            <dl class="row">
+                <dt class="col-sm-4">Opis</dt>
+                <dd class="col-sm-8">@Model.Name</dd>
+
+                <dt class="col-sm-4">Kategoria</dt>
+                <dd class="col-sm-8">@Model.Category</dd>
+
+                <dt class="col-sm-4">Status</dt>
+                <dd class="col-sm-8">
+                    @if (Model.Status == "Zrobione")
+                    {
+                        <span class="badge bg-success">Zrobione</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Do zrobienia</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-4">Data utworzenia</dt>
+                <dd class="col-sm-8">@Model.CreatedAt.ToString("yyyy-MM-dd HH:mm")</dd>
+            </dl>
+
+            <div class="mt-4">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary me-2">Edytuj</a>
+                <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+            </div>
+        </div>
+    </div>
+</div>

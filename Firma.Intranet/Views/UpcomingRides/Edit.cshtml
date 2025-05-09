@@ -1,0 +1,63 @@
+﻿@model Firma.Intranet.Models.UpcomingRide
+
+@{
+    ViewData["Title"] = "Edytuj jazdę";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4 form-box-left" style="max-width: 900px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">Edytuj zaplanowaną jazdę</h3>
+
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="RiderId" class="form-label"></label>
+                    <select asp-for="RiderId" class="form-control" asp-items="ViewBag.RiderId"></select>
+                    <span asp-validation-for="RiderId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="InstructorId" class="form-label"></label>
+                    <select asp-for="InstructorId" class="form-control" asp-items="ViewBag.InstructorId"></select>
+                    <span asp-validation-for="InstructorId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="HorseId" class="form-label"></label>
+                    <select asp-for="HorseId" class="form-control" asp-items="ViewBag.HorseId"></select>
+                    <span asp-validation-for="HorseId" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="RideDate" class="form-label"></label>
+                    <input asp-for="RideDate" class="form-control" type="datetime-local" />
+                    <span asp-validation-for="RideDate" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Notes" class="form-label"></label>
+                    <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="form-check mb-3">
+                    <input asp-for="IsConfirmed" class="form-check-input" type="checkbox" />
+                    <label asp-for="IsConfirmed" class="form-check-label"></label>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary me-2">Zapisz zmiany</button>
+                    <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

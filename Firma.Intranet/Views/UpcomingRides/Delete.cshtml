@@ -1,0 +1,51 @@
+﻿@model Firma.Intranet.Models.UpcomingRide
+
+@{
+    ViewData["Title"] = "Usuń jazdę";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4 form-box-left" style="max-width: 900px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4 text-danger">Czy na pewno chcesz usunąć tę jazdę?</h3>
+
+            <dl class="row">
+                <dt class="col-sm-4">Data i godzina</dt>
+                <dd class="col-sm-8">@Model.RideDate.ToString("yyyy-MM-dd HH:mm")</dd>
+
+                <dt class="col-sm-4">Jeździec</dt>
+                <dd class="col-sm-8">@Model.Rider?.FirstName @Model.Rider?.LastName</dd>
+
+                <dt class="col-sm-4">Instruktor</dt>
+                <dd class="col-sm-8">@Model.Instructor?.FirstName @Model.Instructor?.LastName</dd>
+
+                <dt class="col-sm-4">Koń</dt>
+                <dd class="col-sm-8">@Model.Horse?.Name</dd>
+
+                <dt class="col-sm-4">Notatki</dt>
+                <dd class="col-sm-8">@Model.Notes</dd>
+
+                <dt class="col-sm-4">Potwierdzona</dt>
+                <dd class="col-sm-8">
+                    @if (Model.IsConfirmed)
+                    {
+                        <span class="badge bg-success">Tak</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Nie</span>
+                    }
+                </dd>
+            </dl>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-danger me-2">Tak, usuń</button>
+                    <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

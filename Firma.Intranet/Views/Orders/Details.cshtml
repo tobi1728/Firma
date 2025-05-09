@@ -1,0 +1,49 @@
+﻿@model Firma.Intranet.Models.Order
+
+@{
+    ViewData["Title"] = "Szczegóły zamówienia";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4 form-box-left" style="max-width: 800px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">Szczegóły zamówienia</h3>
+
+            <dl class="row">
+                <dt class="col-sm-4">Przedmiot</dt>
+                <dd class="col-sm-8">@Model.ItemName</dd>
+
+                <dt class="col-sm-4">Kategoria</dt>
+                <dd class="col-sm-8">@Model.Category</dd>
+
+                <dt class="col-sm-4">Kwota</dt>
+                <dd class="col-sm-8">@Model.Amount.ToString("C")</dd>
+
+                <dt class="col-sm-4">Status</dt>
+                <dd class="col-sm-8">
+                    @if (Model.Status == "Zrealizowane")
+                    {
+                        <span class="badge bg-success">@Model.Status</span>
+                    }
+                    else if (Model.Status == "W realizacji")
+                    {
+                        <span class="badge bg-warning text-dark">@Model.Status</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">@Model.Status</span>
+                    }
+                </dd>
+
+                <dt class="col-sm-4">Data zamówienia</dt>
+                <dd class="col-sm-8">@Model.OrderDate.ToString("yyyy-MM-dd HH:mm")</dd>
+            </dl>
+
+            <div class="mt-4">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary me-2">Edytuj</a>
+                <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+            </div>
+        </div>
+    </div>
+</div>
