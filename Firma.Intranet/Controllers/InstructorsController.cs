@@ -60,6 +60,8 @@ namespace Firma.Intranet.Controllers
         public async Task<IActionResult> Create(Instructor instructor, IFormFile Photo)
         {
             if (!ModelState.IsValid)
+            {
+                // ewentualny log błędów
                 foreach (var key in ModelState.Keys)
                 {
                     var state = ModelState[key];
@@ -68,7 +70,7 @@ namespace Firma.Intranet.Controllers
                         Console.WriteLine($"Model error on {key}: {state.Errors[0].ErrorMessage}");
                     }
                 }
-            {
+
                 ViewBag.RidingTypes = new SelectList(_ridingTypes);
                 return View(instructor);
             }

@@ -15,7 +15,7 @@ namespace Firma.Intranet.Data
         {
         }
 
-        public virtual DbSet<Horse> Horses { get; set; }
+        public DbSet<Horse> Horses { get; set; }
         public DbSet<HorseCheckup> HorseCheckups { get; set; }
         public DbSet<Rider> Riders { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
