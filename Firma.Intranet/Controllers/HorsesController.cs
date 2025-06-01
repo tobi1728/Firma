@@ -45,7 +45,7 @@ namespace Firma.Intranet.Controllers
         // POST: Horses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Horse horse, IFormFile? photo) // <- tu dodajemy ?
+        public async Task<IActionResult> Create(Horse horse, IFormFile? photo) 
         {
             if (ModelState.IsValid)
             {
