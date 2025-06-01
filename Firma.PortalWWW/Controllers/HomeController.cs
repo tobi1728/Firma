@@ -49,8 +49,9 @@ namespace Firma.PortalWWW.Controllers
             return View();
         }
 
-        public IActionResult BookRide()
+        public IActionResult BookRide(string? service)
         {
+            ViewBag.PreselectedService = service;
             return View();
         }
 

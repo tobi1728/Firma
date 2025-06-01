@@ -1,0 +1,38 @@
+﻿@model Firma.PortalWWW.Models.Horse
+
+@{
+    var imageUrl = $"https://localhost:7074/api/images/horse/{Model.Id}";
+}
+
+<div class="col-md-4 mb-4" data-aos="fade-up">
+    <div class="horse-card">
+        <img src="@imageUrl"
+             onerror="this.onerror=null; this.src='/content/images/no-image.jpg';"
+             alt="@Model.Name"
+             class="horse-image" />
+        <div class="horse-info">
+            <h3 class="horse-name">@Model.Name</h3>
+            <ul class="horse-details">
+                <li><strong>Rasa:</strong> @Model.Breed</li>
+                <li>
+                    <strong>Wiek:</strong> @Model.Age
+                    @{
+                        var age = Model.Age;
+                        string suffix = age == 1 ? "rok"
+                        : (age % 10 >= 2 && age % 10 <= 4 && (age % 100 < 10 || age % 100 >= 20)) ? "lata"
+                        : "lat";
+                    }
+                    @suffix
+                </li>
+                @if (!string.IsNullOrEmpty(Model.MaxRiderLevel))
+                {
+                    <li><strong>Poziom:</strong> @Model.MaxRiderLevel</li>
+                }
+                @if (!string.IsNullOrEmpty(Model.Status))
+                {
+                    <li><strong>Status:</strong> @Model.Status</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

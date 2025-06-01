@@ -1,0 +1,24 @@
+﻿@model Firma.PortalWWW.Models.Instructor
+
+@{
+    var imageUrl = $"https://localhost:7074/api/images/instructor/{Model.Id}";
+}
+
+<div class="col-md-4 mb-4" data-aos="fade-up">
+    <div class="horse-card">
+        <img src="@imageUrl"
+             onerror="this.onerror=null; this.src='/images/no-image.jpg';"
+             alt="@($"{Model.FirstName} {Model.LastName}")"
+             class="horse-image" />
+        <div class="horse-info">
+            <h3 class="horse-name">@Model.FirstName @Model.LastName</h3>
+            <ul class="horse-details">
+                <li><strong>Doświadczenie:</strong> @Model.YearsOfExperience lat</li>
+                @if (!string.IsNullOrEmpty(Model.RidingType))
+                {
+                    <li><strong>Specjalizacja:</strong> @Model.RidingType</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

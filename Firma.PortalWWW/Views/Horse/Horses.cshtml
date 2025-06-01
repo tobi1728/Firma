@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Firma.PortalWWW.Models.Horse>
+
+<section class="section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="section-title" data-aos="fade-up">Nasze Konie</h1>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Poznaj naszych czworonożnych przyjaciół, którzy pomogą Ci w nauce jeździectwa
+            </p>
+        </div>
+
+        <div class="row" id="horse-list">
+            @{
+                var displayed = Model.Take(3).ToList();
+                var hidden = Model.Skip(3).ToList();
+            }
+
+            @foreach (var horse in displayed)
+            {
+                <partial name="_HorseCard" model="horse" />
+            }
+
+            @foreach (var horse in hidden)
+            {
+                <partial name="_HorseCard" model="horse" />
+            }
+        </div>
+
+        @if (Model.Count() > 3)
+        {
+            <div class="text-center mt-4">
+                <button class="btn btn-outline-light" id="show-more-btn">Pokaż więcej</button>
+            </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const cards = [...document.querySelectorAll("#horse-list > .col-md-4")];
+                    cards.slice(3).forEach(el => el.style.display = "none");
+
+                    document.getElementById("show-more-btn").addEventListener("click", function () {
+                        cards.slice(3).forEach(el => el.style.display = "block");
+                        this.style.display = "none";
+                    });
+                });
+            </script>
+        }
+    </div>
+</section>

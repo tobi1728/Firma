@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Firma.PortalWWW.Models.Service>
+
+<section class="section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="section-title" data-aos="fade-up">Nasza Oferta</h1>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Sprawdź dostępne jazdy i zajęcia prowadzone w naszej stajni
+            </p>
+        </div>
+
+        <div class="row">
+            @foreach (var service in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="p-4 shadow rounded bg-light h-100">
+                        <h4 class="mb-2">@service.Name</h4>
+                        <p>@service.Description</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Czas trwania:</strong> @service.DurationMinutes minut</li>
+                            <li><strong>Cena:</strong> @service.Price zł</li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

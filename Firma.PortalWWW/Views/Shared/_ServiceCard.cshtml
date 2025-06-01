@@ -1,0 +1,22 @@
+﻿@model Firma.PortalWWW.Models.Service
+
+@{
+    var imageUrl = $"https://localhost:7074/api/images/service/{Model.Id}";
+}
+
+<div class="col-md-4 mb-4" data-aos="fade-up">
+    <div class="horse-card">
+        <img src="@imageUrl"
+             onerror="this.onerror=null; this.src='/images/no-image.jpg';"
+             alt="@Model.Name"
+             class="horse-image" />
+        <div class="horse-info">
+            <h3 class="horse-name">@Model.Name</h3>
+            <p>@Model.Description</p>
+            <ul class="horse-details">
+                <li><strong>Czas:</strong> @Model.DurationMinutes minut</li>
+                <li><strong>Cena:</strong> @Model.Price zł</li>
+            </ul>
+        </div>
+    </div>
+</div>

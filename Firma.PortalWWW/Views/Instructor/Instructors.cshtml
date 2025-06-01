@@ -1,0 +1,19 @@
+﻿@model IEnumerable<Firma.PortalWWW.Models.Instructor>
+
+<section class="section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="section-title" data-aos="fade-up">Nasi Instruktorzy</h1>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Poznaj osoby, które poprowadzą Cię przez świat jeździectwa
+            </p>
+        </div>
+
+        <div class="row" id="instructor-list">
+            @foreach (var instructor in Model)
+            {
+                <partial name="_InstructorCard" model="instructor" />
+            }
+        </div>
+    </div>
+</section>

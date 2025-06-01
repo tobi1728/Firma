@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Firma.PortalWWW.Models.Service>
+
+<section class="section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="section-title" data-aos="fade-up">Nasza Oferta</h1>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Zobacz usługi dostępne w naszej stajni – jak w dobrej karcie dań
+            </p>
+        </div>
+
+        <div class="service-table-wrapper">
+            <div class="table-responsive">
+                <table class="service-table">
+                    <thead>
+                        <tr>
+                            <th class="text-start">Usługa</th>
+                            <th class="text-start">Czas trwania</th>
+                            <th class="text-start">Cena</th>
+                            <th class="text-start">Opis</th>
+                            <th class="text-start"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var service in Model)
+                        {
+                            <tr>
+                                <td><strong>@service.Name</strong></td>
+                                <td width="150px">@service.DurationMinutes min</td>
+                                <td width="150px">@service.Price.ToString("0.00") zł</td>
+                                <td>@service.Description</td>
+                                <td>
+                                <div class="mt-2">
+                                        <a href="@Url.Action("BookRide", "Home", new { service = service.Name })"
+                                           class="btn btn-sm btn-primary">
+                                            Zarezerwuj
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
