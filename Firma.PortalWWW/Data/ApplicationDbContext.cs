@@ -13,7 +13,7 @@ namespace Firma.PortalWWW.Data
         public DbSet<Horse> Horses { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Service> Services { get; set; }
-
+        public DbSet<Rider> Riders { get; set; }
 
     }
 }

@@ -49,5 +49,22 @@ namespace Firma.Intranet.Controllers
             return PhysicalFile(fullPath, contentType);
         }
 
+        [HttpGet("rider/{id}")]
+        public IActionResult GetRiderImage(int id)
+        {
+            var rider = _context.Riders.FirstOrDefault(r => r.Id == id);
+
+            if (rider == null || string.IsNullOrEmpty(rider.PhotoUrl))
+                return NotFound();
+
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", rider.PhotoUrl.TrimStart('/'));
+
+            if (!System.IO.File.Exists(fullPath))
+                return NotFound();
+
+            var contentType = "image/jpeg"; // lub dynamiczne rozpoznanie
+            return PhysicalFile(fullPath, contentType);
+        }
+
     }
 }

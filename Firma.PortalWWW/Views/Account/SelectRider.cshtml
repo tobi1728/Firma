@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Firma.PortalWWW.Models.Rider>
+
+@{
+    ViewData["Title"] = "Wybierz jeźdźca";
+}
+
+<section class="section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="section-title">Zaloguj się jako jeździec</h1>
+            <p class="section-subtitle">Wybierz jednego z dostępnych jeźdźców, aby przejść dalej</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form asp-action="LoginAsRider" method="post">
+                    <div class="mb-3">
+                        <label for="riderId" class="form-label">Wybierz jeźdźca:</label>
+                        <select class="form-select" name="riderId" id="riderId" required>
+                            <option disabled selected value="">-- Wybierz --</option>
+                            @foreach (var rider in Model)
+                            {
+                                <option value="@rider.Id">@rider.FirstName @rider.LastName (@rider.SkillLevel)</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Zaloguj</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,55 @@
+﻿@model Firma.PortalWWW.Models.Rider
+
+@{
+    ViewData["Title"] = "Mój profil";
+}
+
+@{
+    var imageUrl = $"https://localhost:7074/api/images/rider/{Model.Id}";
+}
+
+<section class="section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="section-title">Mój profil</h1>
+            <p class="section-subtitle">Zobacz dane przypisane do Twojego konta jeźdźca</p>
+        </div>
+
+        <div class="text-white p-4 border border-primary rounded-4 shadow-sm mx-auto" style="max-width: 700px;">
+            @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+            {
+                <div class="text-center mb-4">
+                    <img src="@imageUrl"
+                         onerror="this.onerror=null; this.src='/content/images/no-image.jpg';"
+                         alt="Zdjęcie jeźdźca"
+                         class="rounded-circle shadow-sm"
+                         style="width: 150px; height: 150px; object-fit: cover;" />
+                </div>
+            }
+
+            <dl class="row">
+                <dt class="col-sm-4">Imię</dt>
+                <dd class="col-sm-8">@Model.FirstName</dd>
+
+                <dt class="col-sm-4">Nazwisko</dt>
+                <dd class="col-sm-8">@Model.LastName</dd>
+
+                <dt class="col-sm-4">Numer telefonu</dt>
+                <dd class="col-sm-8">@Model.PhoneNumber</dd>
+
+                <dt class="col-sm-4">Wiek</dt>
+                <dd class="col-sm-8">@Model.Age</dd>
+
+                <dt class="col-sm-4">Poziom zaawansowania</dt>
+                <dd class="col-sm-8">@Model.SkillLevel</dd>
+
+                <dt class="col-sm-4">Waga</dt>
+                <dd class="col-sm-8">@Model.Weight kg</dd>
+            </dl>
+
+            <div class="text-end mt-4">
+                <a class="btn btn-outline-primary" href="#">Edytuj profil</a>
+            </div>
+        </div>
+    </div>
+</section>

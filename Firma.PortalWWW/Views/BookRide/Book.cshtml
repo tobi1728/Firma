@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Firma.PortalWWW.Models.Service>
+@{
+    ViewData["Title"] = "Rezerwuj jazdę";
+    var selected = ViewBag.PreselectedService as string;
+}
+
+<section class="section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="section-title">Rezerwuj jazdę</h1>
+            <p class="section-subtitle text-secondary">Wybierz usługę i termin jazdy konnej</p>
+        </div>
+
+        <div class="horse-card text-white p-4 border border-primary rounded-4 shadow-sm mx-auto" style="max-width: 700px;">
+            <form method="post" action="#">
+                <div class="mb-3">
+                    <label for="service" class="form-label">Usługa</label>
+                    <select id="service" name="service" class="form-select" required>
+                        <option disabled selected value="">-- Wybierz --</option>
+                        @foreach (var service in Model)
+                        {
+                            <option value="@service.Name" selected="@(service.Name == selected)">
+                                @service.Name (@service.DurationMinutes min, @service.Price zł)
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="date" class="form-label">Data</label>
+                    <input type="date" class="form-control" id="date" name="date" required />
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-outline-primary">Zarezerwuj jazdę</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
