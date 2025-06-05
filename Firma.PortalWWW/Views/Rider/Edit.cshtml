@@ -1,0 +1,70 @@
+﻿@model Firma.PortalWWW.Models.Rider
+
+@{
+    ViewData["Title"] = "Edytuj profil";
+}
+
+<section class="section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="section-title">Edytuj profil</h1>
+            <p class="section-subtitle">Zaktualizuj swoje dane jeździeckie</p>
+        </div>
+
+        <div class="text-white p-4 border border-primary rounded-4 shadow-sm mx-auto" style="max-width: 600px;">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label asp-for="FirstName" class="form-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="LastName" class="form-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="PhoneNumber" class="form-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Age" class="form-label"></label>
+                    <input asp-for="Age" class="form-control" />
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="SkillLevel" class="form-label"></label>
+                    <select asp-for="SkillLevel" class="form-select">
+                        <option value="">-- Wybierz poziom --</option>
+                        <option>Początkujący</option>
+                        <option>Podstawowy</option>
+                        <option>Średniozaawansowany</option>
+                        <option>Zaawansowany</option>
+                    </select>
+                    <span asp-validation-for="SkillLevel" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Weight" class="form-label"></label>
+                    <input asp-for="Weight" class="form-control" />
+                    <span asp-validation-for="Weight" class="text-danger"></span>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary px-4">Zapisz zmiany</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

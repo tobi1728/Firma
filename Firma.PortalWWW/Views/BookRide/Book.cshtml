@@ -1,6 +1,10 @@
 ﻿@model IEnumerable<Firma.PortalWWW.Models.Service>
+
 @{
     ViewData["Title"] = "Rezerwuj jazdę";
+    var rider = ViewBag.Rider as Firma.PortalWWW.Models.Rider;
+    var horses = ViewBag.Horses as List<Firma.PortalWWW.Models.Horse>;
+    var instructors = ViewBag.Instructors as List<Firma.PortalWWW.Models.Instructor>;
     var selected = ViewBag.PreselectedService as string;
 }
 
@@ -8,33 +12,69 @@
     <div class="container">
         <div class="text-center mb-5">
             <h1 class="section-title">Rezerwuj jazdę</h1>
-            <p class="section-subtitle text-secondary">Wybierz usługę i termin jazdy konnej</p>
+            <p class="section-subtitle">dla: @rider.FirstName @rider.LastName</p>
         </div>
 
-        <div class="horse-card text-white p-4 border border-primary rounded-4 shadow-sm mx-auto" style="max-width: 700px;">
-            <form method="post" action="#">
-                <div class="mb-3">
-                    <label for="service" class="form-label">Usługa</label>
-                    <select id="service" name="service" class="form-select" required>
-                        <option disabled selected value="">-- Wybierz --</option>
-                        @foreach (var service in Model)
-                        {
-                            <option value="@service.Name" selected="@(service.Name == selected)">
-                                @service.Name (@service.DurationMinutes min, @service.Price zł)
-                            </option>
-                        }
-                    </select>
-                </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form method="get" action="/BookRide/Book">
+                    <div class="mb-4">
+                        <label for="service" class="form-label">Usługa</label>
+                        <select id="service" name="service" class="form-select" required onchange="this.form.submit()">
+                            <option disabled selected value="">-- Wybierz --</option>
+                            @foreach (var service in Model)
+                            {
+                                if (selected == service.Name)
+                                {
+                                    @:
+                                    <option value="@service.Name" selected>@service.Name (@service.DurationMinutes min, @($"{service.Price:0.00}") zł)</option>
+                                }
+                                else
+                                {
+                                    @:
+                                    <option value="@service.Name">@service.Name (@service.DurationMinutes min, @($"{service.Price:0.00}") zł)</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </form>
 
-                <div class="mb-3">
-                    <label for="date" class="form-label">Data</label>
-                    <input type="date" class="form-control" id="date" name="date" required />
-                </div>
+                @if (!string.IsNullOrEmpty(selected))
+                {
+                    <form method="post" action="/BookRide/Book">
+                        <input type="hidden" name="service" value="@selected" />
 
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-outline-primary">Zarezerwuj jazdę</button>
-                </div>
-            </form>
+                        <div class="mb-4">
+                            <label for="date" class="form-label">Data jazdy</label>
+                            <input type="date" class="form-control bg-white text-black" id="date" name="date" required />
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="horseId" class="form-label">Koń</label>
+                            <select id="horseId" name="horseId" class="form-select" required>
+                                @foreach (var horse in horses)
+                                {
+                                    <option value="@horse.Id">@horse.Name</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="instructorId" class="form-label">Instruktor</label>
+                            <select id="instructorId" name="instructorId" class="form-select" required>
+                                @foreach (var instructor in instructors)
+                                {
+                                    <option value="@instructor.Id">@instructor.FirstName @instructor.LastName</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary fw-semibold text-uppercase">Umów jazdę</button>
+                        </div>
+                    </form>
+                }
+            </div>
         </div>
     </div>
 </section>

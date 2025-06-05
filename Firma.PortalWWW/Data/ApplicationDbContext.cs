@@ -14,6 +14,7 @@ namespace Firma.PortalWWW.Data
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Rider> Riders { get; set; }
+        public DbSet<UpcomingRide> UpcomingRides { get; set; }
 
     }
 }

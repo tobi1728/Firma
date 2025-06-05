@@ -48,12 +48,12 @@
                     @if (riderId != null)
                     {
                         <a class="nav-link" asp-controller="Rider" asp-action="Profile">Profil</a>
-                        <a class="nav-link" asp-controller="Account" asp-action="Logout">Wyloguj</a>
+                        <a class="btn btn-primary ms-2" asp-controller="Account" asp-action="Logout">Wyloguj</a>
                     }
                     else
                     {
-                        <a class="nav-link" asp-controller="Account" asp-action="SelectRider">Zaloguj się</a>
-                    }                    <a class="btn btn-primary ms-2" asp-controller="Account" asp-action="Register">Dosiądź konia</a>
+                        <a class="btn btn-primary ms-2" asp-controller="Account" asp-action="SelectRider">Zaloguj się</a>
+                    }                   
                 </div>
             </div>
         </div>

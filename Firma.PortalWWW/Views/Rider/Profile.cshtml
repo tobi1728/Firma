@@ -2,9 +2,6 @@
 
 @{
     ViewData["Title"] = "Mój profil";
-}
-
-@{
     var imageUrl = $"https://localhost:7074/api/images/rider/{Model.Id}";
 }
 
@@ -15,40 +12,24 @@
             <p class="section-subtitle">Zobacz dane przypisane do Twojego konta jeźdźca</p>
         </div>
 
-        <div class="text-white p-4 border border-primary rounded-4 shadow-sm mx-auto" style="max-width: 700px;">
-            @if (!string.IsNullOrEmpty(Model.PhotoUrl))
-            {
-                <div class="text-center mb-4">
-                    <img src="@imageUrl"
-                         onerror="this.onerror=null; this.src='/content/images/no-image.jpg';"
-                         alt="Zdjęcie jeźdźca"
-                         class="rounded-circle shadow-sm"
-                         style="width: 150px; height: 150px; object-fit: cover;" />
-                </div>
-            }
+        <div class="text-white p-4 border border-primary rounded-4 shadow-sm mx-auto text-center" style="max-width: 500px;">
+            <img src="@imageUrl"
+                 onerror="this.onerror=null; this.src='/content/images/no-image.jpg';"
+                 alt="Zdjęcie jeźdźca"
+                 class="rounded-circle shadow-sm mb-4"
+                 style="width: 150px; height: 150px; object-fit: cover;" />
 
-            <dl class="row">
-                <dt class="col-sm-4">Imię</dt>
-                <dd class="col-sm-8">@Model.FirstName</dd>
-
-                <dt class="col-sm-4">Nazwisko</dt>
-                <dd class="col-sm-8">@Model.LastName</dd>
-
-                <dt class="col-sm-4">Numer telefonu</dt>
-                <dd class="col-sm-8">@Model.PhoneNumber</dd>
-
-                <dt class="col-sm-4">Wiek</dt>
-                <dd class="col-sm-8">@Model.Age</dd>
-
-                <dt class="col-sm-4">Poziom zaawansowania</dt>
-                <dd class="col-sm-8">@Model.SkillLevel</dd>
-
-                <dt class="col-sm-4">Waga</dt>
-                <dd class="col-sm-8">@Model.Weight kg</dd>
-            </dl>
-
-            <div class="text-end mt-4">
-                <a class="btn btn-outline-primary" href="#">Edytuj profil</a>
+            <div class="text-start">
+                <p><strong>Imię:</strong> @Model.FirstName</p>
+                <p><strong>Nazwisko:</strong> @Model.LastName</p>
+                <p><strong>Numer telefonu:</strong> @Model.PhoneNumber</p>
+                <p><strong>Wiek:</strong> @Model.Age</p>
+                <p><strong>Poziom zaawansowania:</strong> @Model.SkillLevel</p>
+                <p><strong>Waga:</strong> @Model.Weight kg</p>
+            </div>
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <a class="btn btn-primary" asp-controller="Rider" asp-action="Edit">Edytuj profil</a>
+                <a class="btn btn-primary" asp-controller="BookRide" asp-action="MyRides">Moje jazdy</a>
             </div>
         </div>
     </div>

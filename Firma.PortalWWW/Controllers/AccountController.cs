@@ -26,7 +26,7 @@ namespace Firma.PortalWWW.Controllers
         public IActionResult LoginAsRider(int riderId)
         {
             HttpContext.Session.SetInt32("RiderId", riderId);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Profile", "Rider");
         }
 
         public IActionResult Logout()

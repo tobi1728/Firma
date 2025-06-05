@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Firma.PortalWWW.Models.UpcomingRide>
+
+@{
+    ViewData["Title"] = "Moje jazdy";
+
+    var rides = Model?.ToList() ?? new List<Firma.PortalWWW.Models.UpcomingRide>();
+    var futureRides = rides.Where(r => r.RideDate >= DateTime.Today).OrderBy(r => r.RideDate);
+    var pastRides = rides.Where(r => r.RideDate < DateTime.Today).OrderByDescending(r => r.RideDate);
+}
+
+<section class="section-padding">
+
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="section-title">Moje jazdy</h1>
+            <p class="section-subtitle">Zobacz historię i nadchodzące jazdy</p>
+        </div>
+
+        <div class="service-table-wrapper mb-5">
+            <h3 class="mb-3">Zaplanowane jazdy</h3>
+            @if (futureRides.Any())
+            {
+                <div class="table-responsive">
+                    <table class="service-table">
+                        <thead>
+                            <tr>
+                                <th class="text-start">Data</th>
+                                <th class="text-start">Koń</th>
+                                <th class="text-start">Instruktor</th>
+                                <th class="text-start">Usługa</th>
+                                <th class="text-start">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var ride in futureRides)
+                            {
+                                <tr>
+                                    <td>@ride.RideDate.ToString("dd.MM.yyyy")</td>
+                                    <td>@ride.Horse?.Name</td>
+                                    <td>@ride.Instructor?.FirstName @ride.Instructor?.LastName</td>
+                                    <td>@ride.Notes</td>
+                                    <td>@(ride.IsConfirmed ? "Potwierdzona" : "Oczekuje")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">Brak zaplanowanych jazd.</p>
+            }
+        </div>
+
+        <div class="service-table-wrapper">
+            <h3 class="mb-3">Zakończone jazdy</h3>
+            @if (pastRides.Any())
+            {
+                <div class="table-responsive">
+                    <table class="service-table">
+                        <thead>
+                            <tr>
+                                <th class="text-start">Data</th>
+                                <th class="text-start">Koń</th>
+                                <th class="text-start">Instruktor</th>
+                                <th class="text-start">Usługa</th>
+                                <th class="text-start">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var ride in pastRides)
+                            {
+                                <tr>
+                                    <td>@ride.RideDate.ToString("dd.MM.yyyy")</td>
+                                    <td>@ride.Horse?.Name</td>
+                                    <td>@ride.Instructor?.FirstName @ride.Instructor?.LastName</td>
+                                    <td>@ride.Notes</td>
+                                    <td>@(ride.IsConfirmed ? "Potwierdzona" : "Oczekuje")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>Brak zakończonych jazd.</p>
+            }
+        </div>
+    </div>
+</section>
