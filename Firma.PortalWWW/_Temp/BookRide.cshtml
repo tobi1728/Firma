@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Zarezerwuj jazdę";
+    var selectedService = ViewBag.PreselectedService as string;
+}
+
+<section class="section-padding">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="section-title" data-aos="fade-up">Zarezerwuj jazdę</h1>
+            <p class="section-subtitle text-secondary" data-aos="fade-up" data-aos-delay="100">
+                Wypełnij poniższy formularz, aby zarezerwować wybraną usługę
+            </p>
+        </div>
+
+        <div class="horse-card p-4 rounded-4 border border-primary text-white shadow-sm mx-auto" style="max-width: 700px;">
+            <form method="post" action="#">
+                @if (!string.IsNullOrEmpty(selectedService))
+                {
+                    <div class="mb-3">
+                        <label class="form-label text-white">Wybrana usługa:</label>
+                        <input type="text" name="service" value="@selectedService" readonly class="form-control-plaintext text-white" />
+                    </div>
+                }
+                else
+                {
+                    <div class="mb-3">
+                        <label for="service" class="form-label text-white">Usługa</label>
+                        <input type="text" class="form-control" id="service" name="service" required />
+                    </div>
+                }
+
+                <div class="mb-3">
+                    <label for="name" class="form-label text-white">Imię i nazwisko</label>
+                    <input type="text" class="form-control" id="name" name="name" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label text-white">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="date" class="form-label text-white">Data jazdy</label>
+                    <input type="date" class="form-control" id="date" name="date" required />
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-outline-primary">Wyślij rezerwację</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

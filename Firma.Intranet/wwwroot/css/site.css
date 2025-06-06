@@ -212,8 +212,7 @@ body {
 
 .form-box-left {
     max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0;
     background-color: #ffffff;
     border-radius: 8px;
     padding: 32px;

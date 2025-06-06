@@ -1,0 +1,30 @@
+﻿@model Firma.Intranet.Models.Service
+@{
+    ViewData["Title"] = "Usuń usługę";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid form-box-left">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4 text-danger">Czy na pewno chcesz usunąć usługę?</h3>
+
+            <dl class="row">
+                <dt class="col-sm-3">Nazwa</dt>
+                <dd class="col-sm-9">@Model.Name</dd>
+
+                <dt class="col-sm-3">Cena</dt>
+                <dd class="col-sm-9">@Model.Price.ToString("0.00") zł</dd>
+
+                <dt class="col-sm-3">Czas trwania</dt>
+                <dd class="col-sm-9">@Model.DurationMinutes min</dd>
+            </dl>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger">Tak, usuń</button>
+                <a asp-action="Index" class="btn btn-secondary ms-2">Anuluj</a>
+            </form>
+        </div>
+    </div>
+</div>

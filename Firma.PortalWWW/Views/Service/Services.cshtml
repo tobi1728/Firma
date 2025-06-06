@@ -3,10 +3,8 @@
 <section class="section-padding">
     <div class="container">
         <div class="text-center mb-5">
-            <h1 class="section-title" data-aos="fade-up">Nasza Oferta</h1>
-            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
-                Zobacz usługi dostępne w naszej stajni
-            </p>
+            <h1 class="section-title" data-aos="fade-up">@ViewBag.Title</h1>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">@ViewBag.Subtitle</p>
         </div>
 
         <div class="service-table-wrapper">
@@ -28,7 +26,7 @@
                                 <td width="150px">@service.DurationMinutes min</td>
                                 <td width="150px">@service.Price.ToString("0.00") zł</td>
                                 <td>@service.Description</td>
-                                </tr>
+                            </tr>
                         }
                     </tbody>
                 </table>

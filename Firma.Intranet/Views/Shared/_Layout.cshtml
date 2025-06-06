@@ -78,11 +78,23 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Reports" ? "active" : "")"
-                       asp-controller="Home" asp-action="Reports">
-                        <i class="fas fa-chart-bar me-2"></i> Raporty
+                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Services" ? "active" : "")"
+                       asp-controller="Services" asp-action="Index">
+                        <i class="fas fa-wrench me-2"></i> Usługi
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link @(ViewContext.RouteData.Values["Controller"]?.ToString() == "CmsContents" ? "active" : "")"
+                       asp-controller="CmsContents" asp-action="Index">
+                        <i class="fas fa-pen-nib me-2"></i> CMS
+                    </a>
+                </li>
+                @* <li class="nav-item"> *@
+                @*     <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Reports" ? "active" : "")" *@
+                @*        asp-controller="Home" asp-action="Reports"> *@
+                @*         <i class="fas fa-chart-bar me-2"></i> Raporty *@
+                @*     </a> *@
+                @* </li> *@
 
             </ul>
 

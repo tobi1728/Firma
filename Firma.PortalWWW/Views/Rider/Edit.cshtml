@@ -1,14 +1,10 @@
 ﻿@model Firma.PortalWWW.Models.Rider
 
-@{
-    ViewData["Title"] = "Edytuj profil";
-}
-
 <section class="section-padding">
     <div class="container">
         <div class="text-center mb-5">
-            <h1 class="section-title">Edytuj profil</h1>
-            <p class="section-subtitle">Zaktualizuj swoje dane jeździeckie</p>
+            <h1 class="section-title">@ViewBag.Title</h1>
+            <p class="section-subtitle">@ViewBag.Subtitle</p>
         </div>
 
         <div class="text-white p-4 border border-primary rounded-4 shadow-sm mx-auto" style="max-width: 600px;">

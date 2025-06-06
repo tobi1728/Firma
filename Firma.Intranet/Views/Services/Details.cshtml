@@ -1,0 +1,52 @@
+﻿@model Firma.Intranet.Models.Service
+@{
+    ViewData["Title"] = "Szczegóły usługi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4 form-box-left" style="max-width: 1000px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">Szczegóły usługi</h3>
+
+            <div class="row align-items-start">
+                <div class="col-lg-7 pe-lg-5">
+                    <dl class="row">
+                        <dt class="col-sm-4">Nazwa</dt>
+                        <dd class="col-sm-8">@Model.Name</dd>
+
+                        <dt class="col-sm-4">Opis</dt>
+                        <dd class="col-sm-8">@Model.Description</dd>
+
+                        <dt class="col-sm-4">Cena</dt>
+                        <dd class="col-sm-8">@Model.Price.ToString("0.00") zł</dd>
+
+                        <dt class="col-sm-4">Czas trwania</dt>
+                        <dd class="col-sm-8">@Model.DurationMinutes min</dd>
+                    </dl>
+                </div>
+
+                <div class="col-lg-5 d-flex justify-content-center">
+                    @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+                    {
+                        <div class="border rounded shadow-sm p-2" style="min-height: 100%; max-height: 400px;">
+                            <img src="@Model.PhotoUrl"
+                                 alt="Zdjęcie usługi"
+                                 class="img-fluid rounded w-100 h-100"
+                                 style="object-fit: cover;" />
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-muted fst-italic">Brak zdjęcia</div>
+                    }
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">Edytuj</a>
+                <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+            </div>
+        </div>
+    </div>
+</div>

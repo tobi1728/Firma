@@ -1,6 +1,9 @@
 using Firma.PortalWWW.Data;
+using Firma.PortalWWW.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using System.Net.Http;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddHttpClient<CmsApiClient>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7011/");
+});
+
 
 builder.Services.AddSession();
 

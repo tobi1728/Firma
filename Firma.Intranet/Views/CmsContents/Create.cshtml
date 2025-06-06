@@ -1,0 +1,138 @@
+﻿@model Firma.Intranet.Models.CmsContent
+
+@{
+    ViewData["Title"] = "Dodaj wpis CMS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid form-box-left">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">Dodaj wpis CMS</h3>
+
+            <form asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Page" class="form-label">Strona</label>
+                    <select asp-for="Page" class="form-select" id="Page">
+                        <option value="">-- Wybierz stronę --</option>
+                        <option>Home</option>
+                        <option>About</option>
+                        <option>Horses</option>
+                        <option>Instructors</option>
+                        <option>Services</option>
+                        <option>Book</option>
+                        <option>MyRides</option>
+                        <option>SelectRider</option>
+                        <option>Profile</option>
+                        <option>Edit</option>
+                        <option>All</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Key" class="form-label">Element</label>
+                    <select asp-for="Key" class="form-select" id="Key">
+                        <option value="">-- Wybierz element --</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Value" class="form-label">Wartość</label>
+                    <textarea asp-for="Value" class="form-control" rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Zapisz</button>
+                <a asp-action="Index" class="btn btn-secondary ms-2">Anuluj</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+                const fieldMap = {
+            "Home": [
+                { key: "Title", label: "Tytuł" },
+                { key: "Subtitle", label: "Podtytuł" }
+            ],
+            "About": [
+                { key: "Title", label: "Tytuł" },
+                { key: "Subtitle", label: "Podtytuł" },
+                { key: "Card1Title", label: "Karta 1 - Tytuł" },
+                { key: "Card1Text", label: "Karta 1 - Opis" },
+                { key: "Card2Title", label: "Karta 2 - Tytuł" },
+                { key: "Card2Text", label: "Karta 2 - Opis" },
+                { key: "Card3Title", label: "Karta 3 - Tytuł" },
+                { key: "Card3Text", label: "Karta 3 - Opis" }
+            ],
+            "Horses": [
+                { key: "Title", label: "Tytuł" },
+                { key: "Subtitle", label: "Podtytuł" }
+            ],
+            "Instructors": [
+                { key: "Title", label: "Tytuł" },
+                { key: "Subtitle", label: "Podtytuł" }
+            ],
+            "Services": [
+                { key: "Title", label: "Tytuł" },
+                { key: "Subtitle", label: "Podtytuł" }
+            ],
+            "Book": [
+                { key: "Title", label: "Tytuł" },
+                { key: "Subtitle", label: "Podtytuł" }
+            ],
+            "MyRides": [
+                { key: "Title", label: "Tytuł" },
+                { key: "Subtitle", label: "Podtytuł" }
+            ],
+            "SelectRider": [
+                { key: "Title", label: "Tytuł" },
+                { key: "Subtitle", label: "Podtytuł" }
+            ],
+            "Profile": [
+                { key: "Title", label: "Tytuł" },
+                { key: "Subtitle", label: "Podtytuł" }
+            ],
+            "Edit": [
+                { key: "Title", label: "Tytuł" },
+                { key: "Subtitle", label: "Podtytuł" }
+            ],
+            "All": [
+                { key: "header-about", label: "Header - O nas" },
+                { key: "header-horses", label: "Header - Konie" },
+                { key: "header-instructors", label: "Header - Instruktorzy" },
+                { key: "header-services", label: "Header - Oferta" },
+                { key: "header-book", label: "Header - Zarezerwuj jazdę" },
+                { key: "header-login", label: "Header - Zaloguj się" },
+                { key: "header-logout", label: "Header - Wyloguj" },
+                { key: "header-profile", label: "Header - Profil" },
+                { key: "footer-description", label: "Stopka - Opis" },
+                { key: "footer-address", label: "Stopka - Adres" },
+                { key: "footer-phone", label: "Stopka - Telefon" },
+                { key: "footer-email", label: "Stopka - Email" },
+                { key: "footer-working-days", label: "Stopka - Dni robocze" },
+                { key: "footer-weekends", label: "Stopka - Weekend" }
+            ]
+        };
+
+
+        document.getElementById('Page').addEventListener('change', function () {
+            const page = this.value;
+            const keySelect = document.getElementById('Key');
+            keySelect.innerHTML = '<option value="">-- Wybierz element --</option>';
+
+            if (fieldMap[page]) {
+                for (const entry of fieldMap[page]) {
+                    const option = document.createElement('option');
+                    option.value = entry.key;
+                    option.textContent = entry.label;
+                    keySelect.appendChild(option);
+                }
+            }
+        });
+    </script>
+}

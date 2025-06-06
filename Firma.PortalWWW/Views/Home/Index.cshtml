@@ -1,12 +1,8 @@
-﻿@{
-    ViewData["Title"] = "Strona Główna";
-}
-
-<container>
+﻿<container>
     <section class="hero-section">
         <div class="hero-content">
-            <h1 class="hero-title">Odkryj Świat Jeździectwa</h1>
-            <p class="hero-subtitle">Profesjonalna szkoła jazdy konnej z pasją do koni i tradycji</p>
+            <h1 class="section-title">@ViewBag.Title</h1>
+            <p class="section-subtitle">@ViewBag.Subtitle</p>
             <a class="btn btn-primary btn-lg" asp-controller="Home" asp-action="About">Poznaj Nas Bliżej</a>
         </div>
     </section>

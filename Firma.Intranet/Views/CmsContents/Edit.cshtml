@@ -1,0 +1,38 @@
+﻿@model Firma.Intranet.Models.CmsContent
+
+@{
+    ViewData["Title"] = "Edytuj treść CMS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid form-box-left">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">Edytuj wpis CMS</h3>
+
+            <form asp-action="Edit" method="post">
+                <input type="hidden" asp-for="Id" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Page" class="form-label"></label>
+                    <input asp-for="Page" class="form-control" readonly />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Key" class="form-label"></label>
+                    <input asp-for="Key" class="form-control" readonly />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Value" class="form-label"></label>
+                    <textarea asp-for="Value" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Value" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                <a asp-action="Index" class="btn btn-secondary ms-2">Anuluj</a>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+﻿@model Firma.Intranet.Models.CmsContent
+
+@{
+    ViewData["Title"] = "Szczegóły treści CMS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4 form-box-left" style="max-width: 1000px;">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">Szczegóły treści CMS</h3>
+
+            <dl class="row">
+                <dt class="col-sm-3">Strona</dt>
+                <dd class="col-sm-9">@Model.Page</dd>
+
+                <dt class="col-sm-3">Klucz</dt>
+                <dd class="col-sm-9">@Model.Key</dd>
+
+                <dt class="col-sm-3">Wartość</dt>
+                <dd class="col-sm-9">@Model.Value</dd>
+            </dl>
+
+            <div class="mt-4">
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">Edytuj</a>
+                <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+            </div>
+        </div>
+    </div>
+</div>

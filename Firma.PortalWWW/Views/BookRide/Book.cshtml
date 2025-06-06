@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<Firma.PortalWWW.Models.Service>
 
 @{
-    ViewData["Title"] = "Rezerwuj jazdę";
     var rider = ViewBag.Rider as Firma.PortalWWW.Models.Rider;
     var horses = ViewBag.Horses as List<Firma.PortalWWW.Models.Horse>;
     var instructors = ViewBag.Instructors as List<Firma.PortalWWW.Models.Instructor>;
@@ -11,7 +10,7 @@
 <section class="section-padding">
     <div class="container">
         <div class="text-center mb-5">
-            <h1 class="section-title">Rezerwuj jazdę</h1>
+            <h1 class="section-title">@ViewBag.Title</h1>
             <p class="section-subtitle">dla: @rider.FirstName @rider.LastName</p>
         </div>
 
@@ -26,12 +25,10 @@
                             {
                                 if (selected == service.Name)
                                 {
-                                    @:
                                     <option value="@service.Name" selected>@service.Name (@service.DurationMinutes min, @($"{service.Price:0.00}") zł)</option>
                                 }
                                 else
                                 {
-                                    @:
                                     <option value="@service.Name">@service.Name (@service.DurationMinutes min, @($"{service.Price:0.00}") zł)</option>
                                 }
                             }

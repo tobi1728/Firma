@@ -1,27 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Firma.PortalWWW.Data;
-using Firma.PortalWWW.Models;
+using Firma.PortalWWW.Services; 
 
 namespace Firma.PortalWWW.Controllers
 {
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly CmsApiClient _cmsClient;
 
-        public AccountController(ApplicationDbContext context)
+        public AccountController(ApplicationDbContext context, CmsApiClient cmsClient)
         {
             _context = context;
+            _cmsClient = cmsClient;
         }
 
-        // GET: /Account/SelectRider
         public async Task<IActionResult> SelectRider()
         {
+            ViewBag.Title = await _cmsClient.GetContent("SelectRider", "Title") ?? "Zaloguj się jako jeździec";
+            ViewBag.Subtitle = await _cmsClient.GetContent("SelectRider", "Subtitle") ?? "Wybierz jednego z dostępnych jeźdźców, aby przejść dalej";
+
             var riders = await _context.Riders.ToListAsync();
             return View(riders);
         }
 
-        // POST: /Account/LoginAsRider
         [HttpPost]
         public IActionResult LoginAsRider(int riderId)
         {

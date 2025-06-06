@@ -24,6 +24,7 @@ namespace Firma.Intranet.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<TaskItem> TaskItems { get; set; }
         public DbSet<Service> Services { get; set; }
+        public DbSet<CmsContent> CmsContents { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

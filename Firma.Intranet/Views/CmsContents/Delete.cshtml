@@ -1,0 +1,32 @@
+﻿@model Firma.Intranet.Models.CmsContent
+
+@{
+    ViewData["Title"] = "Usuń treść CMS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid form-box-left">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4 text-danger">Czy na pewno chcesz usunąć tę treść?</h3>
+
+            <dl class="row">
+                <dt class="col-sm-3">Strona</dt>
+                <dd class="col-sm-9">@Model.Page</dd>
+
+                <dt class="col-sm-3">Element</dt>
+                <dd class="col-sm-9">@Model.Key</dd>
+
+                <dt class="col-sm-3">Wartość</dt>
+                <dd class="col-sm-9">@Model.Value</dd>
+            </dl>
+
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Page" />
+                <input type="hidden" asp-for="Key" />
+                <button type="submit" class="btn btn-danger">Tak, usuń</button>
+                <a asp-action="Index" class="btn btn-secondary ms-2">Anuluj</a>
+            </form>
+        </div>
+    </div>
+</div>

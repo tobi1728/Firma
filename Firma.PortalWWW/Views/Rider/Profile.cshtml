@@ -1,15 +1,14 @@
 ﻿@model Firma.PortalWWW.Models.Rider
 
 @{
-    ViewData["Title"] = "Mój profil";
     var imageUrl = $"https://localhost:7074/api/images/rider/{Model.Id}";
 }
 
 <section class="section-padding">
     <div class="container">
         <div class="text-center mb-5">
-            <h1 class="section-title">Mój profil</h1>
-            <p class="section-subtitle">Zobacz dane przypisane do Twojego konta jeźdźca</p>
+            <h1 class="section-title">@ViewBag.Title</h1>
+            <p class="section-subtitle">@ViewBag.Subtitle</p>
         </div>
 
         <div class="text-white p-4 border border-primary rounded-4 shadow-sm mx-auto text-center" style="max-width: 500px;">

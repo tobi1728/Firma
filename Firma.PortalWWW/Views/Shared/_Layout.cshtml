@@ -1,59 +1,66 @@
-﻿<!DOCTYPE html>
+﻿@inject Firma.PortalWWW.Services.CmsApiClient cms
+
+@{
+    var navAbout = await cms.GetContent("All", "header-about") ?? "O Nas";
+    var navHorses = await cms.GetContent("All", "header-horses") ?? "Konie";
+    var navInstructors = await cms.GetContent("All", "header-instructors") ?? "Instruktorzy";
+    var navServices = await cms.GetContent("All", "header-services") ?? "Oferta";
+    var navBook = await cms.GetContent("All", "header-book") ?? "Zarezerwuj jazdę";
+    var navLogin = await cms.GetContent("All", "header-login") ?? "Zaloguj się";
+    var navLogout = await cms.GetContent("All", "header-logout") ?? "Wyloguj";
+    var navProfile = await cms.GetContent("All", "header-profile") ?? "Profil";
+
+    var footerDesc = await cms.GetContent("All", "footer-description") ?? "Profesjonalna stajnia z wieloletnim doświadczeniem w nauczaniu jeździectwa.";
+    var footerAddress = await cms.GetContent("All", "footer-address") ?? "ul. Końska 123, 00-000 Warszawa";
+    var footerPhone = await cms.GetContent("All", "footer-phone") ?? "+48 123 456 789";
+    var footerEmail = await cms.GetContent("All", "footer-email") ?? "kontakt@blueknight.pl";
+    var footerDays = await cms.GetContent("All", "footer-working-days") ?? "Poniedziałek - Piątek: 8:00 - 20:00";
+    var footerWeekends = await cms.GetContent("All", "footer-weekends") ?? "Sobota - Niedziela: 9:00 - 18:00";
+
+    int? riderId = Context.Session.GetInt32("RiderId");
+}
+
+<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Stajnia Blue Knight</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
-
-
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
             <a class="navbar-brand" href="/">
-            <img class="logo" src="~/content/logo.svg" />    
+                <img class="logo" src="~/content/logo.svg" alt="Logo Blue Knight" />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Home" asp-action="About">O Nas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Horse" asp-action="Horses">Konie</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Instructor" asp-action="Instructors">Instruktorzy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Service" asp-action="Services">Oferta</a>
-                    </li>
-                    <li>
-                    <a class="nav-link" asp-controller="BookRide" asp-action="Book">Zarezerwuj jazdę</a>
-                    </li>
-
+                    <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">@navAbout</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Horse" asp-action="Horses">@navHorses</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Instructor" asp-action="Instructors">@navInstructors</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="Service" asp-action="Services">@navServices</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-controller="BookRide" asp-action="Book">@navBook</a></li>
                 </ul>
                 <div class="auth-elements">
-                    @{
-                        int? riderId = Context.Session.GetInt32("RiderId");
-                    }
-
                     @if (riderId != null)
                     {
-                        <a class="nav-link" asp-controller="Rider" asp-action="Profile">Profil</a>
-                        <a class="btn btn-primary ms-2" asp-controller="Account" asp-action="Logout">Wyloguj</a>
+                        <a class="nav-link" asp-controller="Rider" asp-action="Profile">@navProfile</a>
+                        <a class="btn btn-primary ms-2" asp-controller="Account" asp-action="Logout">@navLogout</a>
                     }
                     else
                     {
-                        <a class="btn btn-primary ms-2" asp-controller="Account" asp-action="SelectRider">Zaloguj się</a>
-                    }                   
+                        <a class="btn btn-primary ms-2" asp-controller="Account" asp-action="SelectRider">@navLogin</a>
+                    }
                 </div>
             </div>
         </div>
@@ -68,9 +75,9 @@
             <div class="container py-5">
                 <div class="row">
                     <div class="col-lg-4 mb-4">
-                        <div class="footer-brand mb-6">
+                        <div class="footer-brand mb-4">
                             <img class="logo" src="~/content/logo.svg" />
-                            <p>Profesjonalna stajnia z wieloletnim doświadczeniem w nauczaniu jeździectwa.</p>
+                            <p>@footerDesc</p>
                         </div>
                         <div class="footer-social">
                             <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
@@ -81,41 +88,24 @@
                     <div class="col-lg-4 mb-4">
                         <h5 class="footer-title">Kontakt</h5>
                         <ul class="footer-contact">
-                            <li>
-                                <i class="fas fa-map-marker-alt"></i>
-                                ul. Końska 123, 00-000 Warszawa
-                            </li>
-                            <li>
-                                <i class="fas fa-phone"></i>
-                                +48 123 456 789
-                            </li>
-                            <li>
-                                <i class="fas fa-envelope"></i>
-                                kontakt@blueknight.pl
-                            </li>
+                            <li><i class="fas fa-map-marker-alt"></i> @footerAddress</li>
+                            <li><i class="fas fa-phone"></i> @footerPhone</li>
+                            <li><i class="fas fa-envelope"></i> @footerEmail</li>
                         </ul>
                     </div>
                     <div class="col-lg-4 mb-4">
                         <h5 class="footer-title">Godziny otwarcia</h5>
                         <ul class="footer-hours">
-                            <li>
-                                <span>Poniedziałek - Piątek:</span>
-                                <span>8:00 - 20:00</span>
-                            </li>
-                            <li>
-                                <span>Sobota - Niedziela:</span>
-                                <span>9:00 - 18:00</span>
-                            </li>
+                            <li><span>@footerDays</span></li>
+                            <li><span>@footerWeekends</span></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
-            <div class="container">
-                    <div class="text-center">
-                        &copy; @DateTime.Now.Year Stajnia Blue Knight. Wszelkie prawa zastrzeżone.
-                    </div>
+            <div class="container text-center">
+                &copy; @DateTime.Now.Year Stajnia Blue Knight. Wszelkie prawa zastrzeżone.
             </div>
         </div>
     </footer>
@@ -126,10 +116,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="~/js/site.js"></script>
     <script>
-        AOS.init({
-            duration: 1000,
-            once: true
-        });
+        AOS.init({ duration: 1000, once: true });
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

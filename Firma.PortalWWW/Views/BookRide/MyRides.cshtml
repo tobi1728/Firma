@@ -1,19 +1,16 @@
 ﻿@model IEnumerable<Firma.PortalWWW.Models.UpcomingRide>
 
 @{
-    ViewData["Title"] = "Moje jazdy";
-
     var rides = Model?.ToList() ?? new List<Firma.PortalWWW.Models.UpcomingRide>();
     var futureRides = rides.Where(r => r.RideDate >= DateTime.Today).OrderBy(r => r.RideDate);
     var pastRides = rides.Where(r => r.RideDate < DateTime.Today).OrderByDescending(r => r.RideDate);
 }
 
 <section class="section-padding">
-
     <div class="container">
         <div class="text-center mb-5">
-            <h1 class="section-title">Moje jazdy</h1>
-            <p class="section-subtitle">Zobacz historię i nadchodzące jazdy</p>
+            <h1 class="section-title">@ViewBag.Title</h1>
+            <p class="section-subtitle">@ViewBag.Subtitle</p>
         </div>
 
         <div class="service-table-wrapper mb-5">

@@ -1,14 +1,10 @@
 ﻿@model IEnumerable<Firma.PortalWWW.Models.Rider>
 
-@{
-    ViewData["Title"] = "Wybierz jeźdźca";
-}
-
 <section class="section-padding">
     <div class="container">
         <div class="text-center mb-5">
-            <h1 class="section-title">Zaloguj się jako jeździec</h1>
-            <p class="section-subtitle">Wybierz jednego z dostępnych jeźdźców, aby przejść dalej</p>
+            <h1 class="section-title">@ViewBag.Title</h1>
+            <p class="section-subtitle">@ViewBag.Subtitle</p>
         </div>
 
         <div class="row justify-content-center">
