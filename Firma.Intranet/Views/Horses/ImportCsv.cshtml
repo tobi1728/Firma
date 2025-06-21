@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Import koni z CSV";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4 form-box-left" style="max-width: 1000px">
+    <h2>Import koni z pliku CSV</h2>
+    <p>Wybierz plik CSV zawierający dane koni. Wiersz nagłówka powinien wyglądać tak:</p>
+    <pre>Imię,Rasa,Wiek,Status,OstatniPrzegląd,Waga,Wzrost,PoziomJeźdźca</pre>
+
+    <form asp-action="ImportCsv" asp-controller="Horses" method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <label for="csvFile" class="form-label">Plik CSV</label>
+            <input type="file" class="form-control" name="csvFile" required />
+        </div>
+        <button type="submit" class="btn btn-success"><i class="fas fa-upload"></i> Importuj</button>
+        <a asp-controller="Home" asp-action="Horses" class="btn btn-secondary ms-2">Anuluj</a>
+    </form>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger mt-3">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+</div>

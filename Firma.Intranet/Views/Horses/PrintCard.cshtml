@@ -1,0 +1,35 @@
+﻿@model Firma.Intranet.Models.Horse
+@{
+    Layout = null;
+    var today = DateTime.Today.ToString("yyyy-MM-dd");
+}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <title>Karta konia: @Model.Name</title>
+    <link rel="stylesheet" href="~/css/printcard.css" />
+</head>
+<body>
+<div class="stall-card">
+        <h1>Karta konia: @Model.Name</h1>
+
+        <div class="row"><div class="label">Rasa:</div><div class="value">@Model.Breed</div></div>
+        <div class="row"><div class="label">Wiek:</div><div class="value">@Model.Age</div></div>
+        <div class="row"><div class="label">Status:</div><div class="value">@Model.Status</div></div>
+        <div class="row"><div class="label">Data przeglądu:</div><div class="value">@Model.LastCheckup?.ToString("yyyy-MM-dd")</div></div>
+        <div class="row"><div class="label">Waga (kg):</div><div class="value">@Model.WeightKg</div></div>
+        <div class="row"><div class="label">Wzrost (cm):</div><div class="value">@Model.HeightCm</div></div>
+        <div class="row"><div class="label">Maks. poziom jeźdźca:</div><div class="value">@Model.MaxRiderLevel</div></div>
+
+        @if (!string.IsNullOrEmpty(Model.PhotoUrl))
+        {
+            <div class="photo">
+                <img src="@Url.Content(Model.PhotoUrl)" alt="Zdjęcie konia" />
+            </div>
+        }
+
+        <button class="print-btn" onclick="window.print()">Drukuj kartę</button>
+    </div>
+</body>
+</html>

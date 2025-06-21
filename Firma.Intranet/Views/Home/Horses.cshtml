@@ -5,139 +5,225 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css" />
+
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0">Zarządzanie końmi</h1>
-        <a asp-controller="Horses" asp-action="Create" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Dodaj konia
-        </a>
+        <div class="btn-group">
+            <a asp-controller="Horses" asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Dodaj konia
+            </a>
+            <a asp-controller="Horses" asp-action="ImportCsv" class="btn btn-outline-secondary">
+                <i class="fas fa-file-upload"></i> Importuj z CSV
+            </a>
+        </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h5 class="card-title mb-0">Lista koni</h5>
-                        </div>
-                        <div class="col-auto">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Szukaj...">
-                                <button class="btn btn-outline-secondary" type="button">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
+    <form id="bulkDeleteForm" asp-controller="Horses" asp-action="DeleteMultipleConfirmed" method="post">
+        @Html.AntiForgeryToken()
+        <button type="button" class="btn btn-danger mb-3" id="bulkDeleteBtn" disabled data-bs-toggle="modal" data-bs-target="#bulkDeleteModal">
+            <i class="fas fa-trash"></i> Usuń zaznaczone
+        </button>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">Lista koni</h5>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Imię</th>
-                                    <th>Rasa</th>
-                                    <th>Wiek</th>
-                                    <th>Status</th>
-                                    <th>Ostatni przegląd</th>
-                                    <th>Akcje</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="horsesTable" class="table">
+                                <thead>
                                     <tr>
-                                        <td>@item.Name</td>
-                                        <td>@item.Breed</td>
-                                        <td>@item.Age</td>
-                                        <td>
-                                            @if (item.Status == "Aktywny")
-                                            {
-                                                <span class="badge bg-success">@item.Status</span>
-                                            }
-                                            else if (item.Status == "W odpoczynku")
-                                            {
-                                                <span class="badge bg-warning text-dark">@item.Status</span>
-                                            }
-                                            else
-                                            {
-                                                <span class="badge bg-secondary">@item.Status</span>
-                                            }
-                                        </td>
-                                        <td>@item.LastCheckup?.ToString("yyyy-MM-dd")</td>
-                                        <td>
-                                            <a asp-controller="Horses" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm me-1" title="Edytuj">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <a asp-controller="Horses" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm me-1" title="Szczegóły">
-                                                <i class="fas fa-magnifying-glass"></i>
-                                            </a>
-                                            <button class="btn btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteModal" data-id="@item.Id" data-name="@item.Name">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </td>
+                                        <th><input type="checkbox" id="selectAll" /></th>
+                                        <th>Imię</th>
+                                        <th>Rasa</th>
+                                        <th>Wiek</th>
+                                        <th>Status</th>
+                                        <th>Ostatni przegląd</th>
+                                        <th>Akcje</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Status koni</h5>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="flex-grow-1"><h6 class="mb-0">Aktywne</h6></div>
-                        <div class="ms-2"><span class="h4 mb-0">28</span></div>
-                    </div>
-                    <div class="d-flex align-items-center mb-3">
-                        <div class="flex-grow-1"><h6 class="mb-0">W odpoczynku</h6></div>
-                        <div class="ms-2"><span class="h4 mb-0">2</span></div>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <div class="flex-grow-1"><h6 class="mb-0">Niedostępne</h6></div>
-                        <div class="ms-2"><span class="h4 mb-0">1</span></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title mb-0">Nadchodzące przeglądy</h5>
-                </div>
-                <div class="card-body">
-                    <div class="upcoming-check">
-                        <div class="upcoming-check-item">
-                            <div class="check-date">25 Sty</div>
-                            <div class="check-info">
-                                <h6>Luna</h6>
-                                <p>Przegląd weterynaryjny</p>
-                            </div>
-                        </div>
-                        <div class="upcoming-check-item">
-                            <div class="check-date">28 Sty</div>
-                            <div class="check-info">
-                                <h6>Wicher</h6>
-                                <p>Kontrola kopyt</p>
-                            </div>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td><input type="checkbox" class="selectCheckbox" value="@item.Id" /></td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Breed</td>
+                                            <td>@item.Age</td>
+                                            <td>
+                                                @if (item.Status == "Aktywny")
+                                                {
+                                                    <span class="badge bg-success">@item.Status</span>
+                                                }
+                                                else if (item.Status == "W odpoczynku")
+                                                {
+                                                    <span class="badge bg-warning text-dark">@item.Status</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-secondary">@item.Status</span>
+                                                }
+                                            </td>
+                                            <td>@item.LastCheckup?.ToString("yyyy-MM-dd")</td>
+                                            <td>
+                                                <a asp-controller="Horses" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm me-1 "><i class="fas fa-edit"></i></a>
+                                                <a asp-controller="Horses" asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm me-1"><i class="fas fa-magnifying-glass"></i></a>
+                                                <a asp-controller="Horses" asp-action="PrintCard" asp-route-id="@item.Id"
+                                                   target="_blank" class="btn btn-sm me-1" title="Drukuj kartę konia">
+                                                    <i class="fas fa-print"></i>
+                                                </a>
+                                                <button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="@item.Id" data-name="@item.Name">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var table = $('#horsesTable').DataTable({
+        dom: '<"row mb-3"<"col-sm-6 d-flex align-items-center gap-2"B><"col-sm-6 text-end"f>>' +
+             'rt' +
+             '<"row mt-3"<"col-sm-4"l><"col-sm-4 text-center"i><"col-sm-4 text-end"p>>',
+                buttons: [
+                    {
+                        extend: 'csvHtml5',
+                        text: '<i class="fas fa-file-csv"></i> CSV',
+                        className: 'btn btn-outline-secondary',
+                        exportOptions: {
+                            columns: ':not(:last-child)'
+                        }
+                    },
+                    {
+                        extend: 'excelHtml5',
+                        text: '<i class="fas fa-file-excel"></i> Excel',
+                        className: 'btn btn-outline-success',
+                        exportOptions: {
+                            columns: ':not(:last-child)'
+                        }
+                    },
+                    {
+                        extend: 'pdfHtml5',
+                        text: '<i class="fas fa-file-pdf"></i> PDF',
+                        className: 'btn btn-outline-danger',
+                        exportOptions: {
+                            columns: ':not(:last-child)'
+                        },
+                        customize: function (doc) {
+                            doc.pageMargins = [20, 20, 20, 20];
+                            doc.defaultStyle.fontSize = 10;
+                            doc.styles.tableHeader.fontSize = 12;
+                            doc.content[1].table.widths = ['*', '*', '*', '*', '*', '*'];
+                        }
+                    },
+                    {
+                        extend: 'print',
+                        text: '<i class="fas fa-print"></i> Drukuj',
+                        className: 'btn btn-outline-primary',
+                        exportOptions: {
+                            columns: ':not(:last-child)'
+                        }
+                    }
+                ],
+                language: {
+                    search: "Szukaj:",
+                    lengthMenu: "Pokaż _MENU_ wpisów",
+                    info: "Wyświetlono _START_ do _END_ z _TOTAL_ wpisów",
+                    infoEmpty: "Brak danych",
+                    zeroRecords: "Brak wyników",
+                    infoFiltered: "(przefiltrowano z _MAX_ wszystkich wpisów)",
+                    paginate: {
+                        previous: "Poprzednia",
+                        next: "Następna"
+                    }
+                },
+                order: [[1, 'asc']],
+                columnDefs: [
+                    { orderable: false, targets: [0, 6] },
+                    {
+                        targets: -1,
+                        visible: true,
+                        exportable: false
+                    }
+                ],
+                initComplete: function () {
+                    $('.dt-buttons .btn').css({
+                        'background-color': 'white',
+                        'color': 'inherit',
+                        'border': '1px solid #ccc'
+                    });
+                    $('.dt-buttons .btn').hover(function () {
+                        $(this).css({ 'background-color': '#f8f9fa', 'color': 'inherit' });
+                    }, function () {
+                        $(this).css({ 'background-color': 'white', 'color': 'inherit' });
+                    });
+                }
+            });
+
+            $('#selectAll').on('change', function () {
+                $('.selectCheckbox').prop('checked', this.checked);
+                toggleBulkDeleteButton();
+            });
+
+            $('.selectCheckbox').on('change', toggleBulkDeleteButton);
+
+            function toggleBulkDeleteButton() {
+                const selected = $('.selectCheckbox:checked').length;
+                const button = $('#bulkDeleteBtn');
+                button.prop('disabled', selected === 0);
+
+                const form = $('#bulkDeleteForm');
+                form.find('input[name="ids"]').remove();
+
+                $('.selectCheckbox:checked').each(function () {
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'ids',
+                        value: $(this).val()
+                    }).appendTo(form);
+                });
+            }
+
+            document.getElementById('confirmBulkDelete').addEventListener('click', function () {
+                document.getElementById('bulkDeleteForm').submit();
+            });
+
+            const deleteModal = document.getElementById('deleteModal');
+            deleteModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                const horseId = button.getAttribute('data-id');
+                const horseName = button.getAttribute('data-name');
+
+                document.getElementById('deleteHorseId').value = horseId;
+                document.getElementById('horseName').textContent = horseName;
+            });
+        });
+    </script>
+}
+
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="deleteForm" method="post">
+            <form id="deleteForm" asp-controller="Horses" asp-action="DeleteConfirmed" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" id="deleteHorseId" />
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteModalLabel">Potwierdź usunięcie</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
@@ -153,19 +239,21 @@
         </div>
     </div>
 </div>
-@section Scripts {
-    <script>
-        const deleteModal = document.getElementById('deleteModal');
-        deleteModal.addEventListener('show.bs.modal', function (event) {
-            const button = event.relatedTarget;
-            const horseId = button.getAttribute('data-id');
-            const horseName = button.getAttribute('data-name');
 
-            const form = deleteModal.querySelector('#deleteForm');
-            form.setAttribute('action', `/Horses/DeleteConfirmed/${horseId}`);
-
-            const namePlaceholder = deleteModal.querySelector('#horseName');
-            namePlaceholder.textContent = horseName;
-        });
-    </script>
-}
+<div class="modal fade" id="bulkDeleteModal" tabindex="-1" aria-labelledby="bulkDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bulkDeleteModalLabel">Potwierdź usunięcie</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Czy na pewno chcesz usunąć zaznaczone konie?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                <button type="button" class="btn btn-danger" id="confirmBulkDelete">Tak, usuń</button>
+            </div>
+        </div>
+    </div>
+</div>

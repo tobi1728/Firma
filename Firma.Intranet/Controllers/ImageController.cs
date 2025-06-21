@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Firma.Intranet.Data; // lub odpowiednia przestrzeń nazw z DbContextem
-using System.IO;
+using Firma.Intranet.Data;
 
 namespace Firma.Intranet.Controllers
 {
@@ -18,17 +17,17 @@ namespace Firma.Intranet.Controllers
         [HttpGet("horse/{id}")]
         public IActionResult GetHorseImage(int id)
         {
-            var instructor = _context.Horses.FirstOrDefault(i => i.Id == id);
+            var horse = _context.Horses.FirstOrDefault(i => i.Id == id);
 
-            if (instructor == null || string.IsNullOrEmpty(instructor.PhotoUrl))
+            if (horse == null || string.IsNullOrEmpty(horse.PhotoUrl))
                 return NotFound();
 
-            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", instructor.PhotoUrl.TrimStart('/'));
+            var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", horse.PhotoUrl.TrimStart('/'));
 
             if (!System.IO.File.Exists(fullPath))
                 return NotFound();
 
-            var contentType = "image/jpeg"; // lub dynamiczne rozpoznanie
+            var contentType = "image/jpeg"; 
             return PhysicalFile(fullPath, contentType);
         }
 
@@ -45,7 +44,7 @@ namespace Firma.Intranet.Controllers
             if (!System.IO.File.Exists(fullPath))
                 return NotFound();
 
-            var contentType = "image/jpeg"; // lub dynamiczne rozpoznanie
+            var contentType = "image/jpeg"; 
             return PhysicalFile(fullPath, contentType);
         }
 
@@ -62,7 +61,7 @@ namespace Firma.Intranet.Controllers
             if (!System.IO.File.Exists(fullPath))
                 return NotFound();
 
-            var contentType = "image/jpeg"; // lub dynamiczne rozpoznanie
+            var contentType = "image/jpeg"; 
             return PhysicalFile(fullPath, contentType);
         }
 

@@ -58,8 +58,12 @@
             </div>
 
             <div class="mt-4">
-                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning me-2">Edytuj</a>
+                <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edytuj</a>
                 <a asp-controller="Home" asp-action="Horses" class="btn btn-secondary">Powrót</a>
+                <a asp-action="PrintCard" asp-route-id="@Model.Id" class="btn btn-outline-dark" target="_blank">
+                    <i class="fas fa-print"></i> Drukuj kartę
+                </a>
+
             </div>
         </div>
     </div>

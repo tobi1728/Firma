@@ -20,6 +20,25 @@ namespace Firma.Intranet.Controllers
         public async Task<IActionResult> Horses()
         {
             var horses = await _context.Horses.ToListAsync();
+
+            ViewBag.ActiveCount = horses.Count(h => h.Status == "Aktywny");
+            ViewBag.RestingCount = horses.Count(h => h.Status == "W odpoczynku");
+            ViewBag.UnavailableCount = horses.Count(h => h.Status == "Niedostêpny");
+
+            var today = DateTime.Today;
+            var upcomingChecks = horses
+                .Where(h => h.LastCheckup.HasValue)
+                .Select(h => new
+                {
+                    Horse = h,
+                    NextCheck = h.LastCheckup.Value.AddDays(180)
+                })
+                .Where(x => x.NextCheck >= today && x.NextCheck <= today.AddDays(30))
+                .OrderBy(x => x.NextCheck)
+                .ToList();
+
+            ViewBag.UpcomingChecks = upcomingChecks;
+
             return View(horses);
         }
 

@@ -25,7 +25,7 @@ namespace CmsService.Controllers
             if (entry == null)
                 return NotFound();
 
-            return Ok(entry.Value); // tylko tekst jako string
+            return Ok(entry.Value);
         }
 
         [HttpGet("{page}")]

@@ -9,12 +9,10 @@ namespace Firma.PortalWWW.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly CmsApiClient _cmsClient;
 
-        public HomeController(ILogger<HomeController> logger, CmsApiClient cmsClient)
+        public HomeController(CmsApiClient cmsClient)
         {
-            _logger = logger;
             _cmsClient = cmsClient;
         }
 
@@ -46,10 +44,6 @@ namespace Firma.PortalWWW.Controllers
 
             return View();
         }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+
     }
 }

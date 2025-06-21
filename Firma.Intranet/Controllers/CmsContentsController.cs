@@ -19,13 +19,12 @@ namespace Firma.Intranet.Controllers
             _context = context;
         }
 
-        // GET: CmsContents
         public async Task<IActionResult> Index()
         {
             return View(await _context.CmsContents.ToListAsync());
         }
 
-        // GET: CmsContents/Details/5
+        
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -43,18 +42,14 @@ namespace Firma.Intranet.Controllers
             return View(cmsContent);
         }
 
-        // GET: CmsContents/Create
         public IActionResult Create()
         {
             ViewBag.Pages = new SelectList(PageFields.Keys);
-            ViewBag.Keys = new List<SelectListItem>(); // start empty
+            ViewBag.Keys = new List<SelectListItem>(); 
 
             return View();
         }
 
-        // POST: CmsContents/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Page,Key,Value")] CmsContent cmsContent)
@@ -68,7 +63,6 @@ namespace Firma.Intranet.Controllers
             return View(cmsContent);
         }
 
-        // GET: CmsContents/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,9 +78,7 @@ namespace Firma.Intranet.Controllers
             return View(cmsContent);
         }
 
-        // POST: CmsContents/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Page,Key,Value")] CmsContent cmsContent)
@@ -119,7 +111,6 @@ namespace Firma.Intranet.Controllers
             return View(cmsContent);
         }
 
-        // GET: CmsContents/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,7 +128,6 @@ namespace Firma.Intranet.Controllers
             return View(cmsContent);
         }
 
-        // POST: CmsContents/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -160,24 +150,38 @@ namespace Firma.Intranet.Controllers
         private static readonly Dictionary<string, List<(string Key, string Label)>> PageFields = new()
         {
             ["Index"] = new() { ("Title", "Tytuł"), ("Subtitle", "Podtytuł") },
-            ["About"] = new() { ("Title", "Tytuł"), ("Subtitle", "Podtytuł"), ("Card1", "Karta 1"), ("Card2", "Karta 2"), ("Card3", "Karta 3") },
-            ["All"] = new()
-    {
-        ("header-about", "Header - O nas"),
-        ("header-horses", "Header - Konie"),
-        ("header-instructors", "Header - Instruktorzy"),
-        ("header-services", "Header - Oferta"),
-        ("header-book", "Header - Zarezerwuj jazdę"),
-        ("header-login", "Header - Zaloguj się"),
-        ("header-logout", "Header - Wyloguj"),
-        ("header-profile", "Header - Profil"),
-        ("footer-description", "Footer - Opis"),
-        ("footer-address", "Footer - Adres"),
-        ("footer-phone", "Footer - Telefon"),
-        ("footer-email", "Footer - E-mail"),
-        ("footer-working-days", "Footer - Dni robocze"),
-        ("footer-weekends", "Footer - Weekend")
-    }
+            ["About"] = new()
+            {
+                ("Title", "Tytuł"),
+                ("Subtitle", "Podtytuł"),
+                ("Experience", "Liczba lat doświadczenia"),
+                ("Horses", "Liczba koni"),
+                ("Students", "Liczba uczniów"),
+                ("Instructors", "Liczba instruktorów"),
+                ("Card1Title", "Tytuł karty 1"),
+                ("Card1Text", "Opis karty 1"),
+                ("Card2Title", "Tytuł karty 2"),
+                ("Card2Text", "Opis karty 2"),
+                ("Card3Title", "Tytuł karty 3"),
+                ("Card3Text", "Opis karty 3")
+            }
+,            ["All"] = new()
+            {
+                ("header-about", "Header - O nas"),
+                ("header-horses", "Header - Konie"),
+                ("header-instructors", "Header - Instruktorzy"),
+                ("header-services", "Header - Oferta"),
+                ("header-book", "Header - Zarezerwuj jazdę"),
+                ("header-login", "Header - Zaloguj się"),
+                ("header-logout", "Header - Wyloguj"),
+                ("header-profile", "Header - Profil"),
+                ("footer-description", "Footer - Opis"),
+                ("footer-address", "Footer - Adres"),
+                ("footer-phone", "Footer - Telefon"),
+                ("footer-email", "Footer - E-mail"),
+                ("footer-working-days", "Footer - Dni robocze"),
+                ("footer-weekends", "Footer - Weekend")
+            }
         };
 
     }
